@@ -13,6 +13,7 @@
   "keywords": [
     "stylelint-plugin",
     "stylelint",
+    "csstree",
     "css",
     "validator",
     "syntax"
