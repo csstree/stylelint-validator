@@ -1,0 +1,37 @@
+{
+  "name": "stylelint-csstree-validator",
+  "version": "1.0.0",
+  "description": "Stylelint rule that validate CSS syntax",
+  "homepage": "https://github.com/csstree/validator",
+  "author": "Roman Dvornov <rdvornov@gmail.com>",
+  "license": "MIT",
+  "repository": "csstree/stylelint-validator",
+  "bugs": {
+    "url": "https://github.com/csstree/stylelint-validator/issues"
+  },
+  "main": "index.js",
+  "keywords": [
+    "stylelint-rule",
+    "stylelint",
+    "css",
+    "validator",
+    "syntax"
+  ],
+  "dependencies": {
+    "css-tree": "^1.0.0-alpha3",
+    "stylelint": "^7.0.0"
+  },
+  "devDependencies": {
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "rules": {
+      "no-duplicate-case": 2,
+      "no-undef": 2,
+      "no-unused-vars": [2, {"vars": "all", "args": "after-used"}]
+    }
+  }
+}
