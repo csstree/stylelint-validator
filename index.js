@@ -38,7 +38,7 @@ module.exports = stylelint.createPlugin(ruleName, function(enabled) {
                 });
             }
 
-            if (!syntax.match(decl.prop, value)) {
+            if (!syntax.matchProperty(decl.prop, value)) {
                 var error = syntax.lastMatchError;
                 var message = error.rawMessage || error.message || error;
 
