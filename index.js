@@ -43,7 +43,7 @@ module.exports = stylelint.createPlugin(ruleName, function(enabled) {
                 var message = error.rawMessage || error.message || error;
 
                 if (message === 'Mismatch') {
-                    message = 'Bad value for `' + decl.prop + '`';
+                    message = 'Invalid value for `' + decl.prop + '`';
                 } else if (message === 'Uncomplete match') {
                     message = 'The rest part of value can\'t to be matched on `' + decl.prop + '` syntax';
                 }
