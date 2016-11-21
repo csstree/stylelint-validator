@@ -1,3 +1,11 @@
+## 1.0.3 (November 21, 2016)
+
+- Bump CSSTree to `1.0.0-alpha8`
+
+## 1.0.2 (September 19, 2016)
+
+- Bump CSSTree to `1.0.0-alpha5`
+
 ## 1.0.1 (September 17, 2016)
 
 - Tweak description files
