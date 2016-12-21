@@ -1,3 +1,7 @@
+## 1.0.4 (December 21, 2016)
+
+- Bump CSSTree to `1.0.0-alpha9`
+
 ## 1.0.3 (November 21, 2016)
 
 - Bump CSSTree to `1.0.0-alpha8`
