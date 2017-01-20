@@ -19,7 +19,7 @@
     "syntax"
   ],
   "dependencies": {
-    "css-tree": "1.0.0-alpha12",
+    "css-tree": "1.0.0-alpha13",
     "stylelint": "^7.0.0"
   },
   "devDependencies": {
