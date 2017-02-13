@@ -1,3 +1,8 @@
+## 1.0.6 (February 12, 2017)
+
+- Bump csstree to `1.0.0-alpha16`
+- Ignore values with `Less` and `Sass` extensions (#3)
+
 ## 1.0.5 (January 19, 2017)
 
 - Bump CSSTree to `1.0.0-alpha12`
