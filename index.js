@@ -1,37 +1,58 @@
 var stylelint = require('stylelint');
 var csstree = require('css-tree');
 var syntax = csstree.syntax.defaultSyntax;
+var parser = new csstree.Parser();
+var TYPE = csstree.Tokenizer.TYPE;
 
 var ruleName = 'csstree/validator'
 var messages = stylelint.utils.ruleMessages(ruleName, {
-    parseValue: function(value) {
+    parseError: function(value) {
         return 'Can\'t parse value "' + value + '"';
+    },
+    invalid: function(property) {
+        return 'Invalid value for `' + property + '`';
+    },
+    uncomplete: function(property) {
+        return 'The rest part of value can\'t to be matched on `' + property + '` syntax';
     }
-})
+});
 
-module.exports = stylelint.createPlugin(ruleName, function(enabled) {
+// custom 
+var PreprocessorExtensionError = function() {
+    this.type = 'PreprocessorExtensionError';
+};
+
+// extend parser value parser
+parser.readSequenceFallback = function() {
+    switch (this.scanner.tokenType) {
+        // less
+        case TYPE.CommercialAt: // @var
+        case TYPE.Tilde:        // ~"asd" ~'asd'
+        // sass
+        case TYPE.PercentSign:  // 5 % 4
+        case TYPE.DollarSign:   // $var
+            throw new PreprocessorExtensionError();
+    }
+};
+
+module.exports = stylelint.createPlugin(ruleName, function() {
     return function(root, result) {
-
-        var validOptions = stylelint.utils.validateOptions(result, ruleName, {
-            actual: enabled,
-            possible: [true, false]
-        });
-
-        if (!validOptions) {
-            return;
-        }
-
         root.walkDecls(function(decl) {
             var value;
 
             try {
-                value = csstree.parse(decl.value, {
+                value = parser.parse(decl.value, {
                     context: 'value',
-                    pproperty: decl.prop
+                    property: decl.prop
                 });
             } catch (e) {
+                // ignore values with preprocessor's extensions
+                if (e.type === 'PreprocessorExtensionError') {
+                    return;
+                }
+
                 return stylelint.utils.report({
-                    message: messages.parseValue(decl.value),
+                    message: messages.parseError(decl.value),
                     node: decl,
                     result: result,
                     ruleName: ruleName
@@ -43,9 +64,9 @@ module.exports = stylelint.createPlugin(ruleName, function(enabled) {
                 var message = error.rawMessage || error.message || error;
 
                 if (message === 'Mismatch') {
-                    message = 'Invalid value for `' + decl.prop + '`';
+                    message = messages.invalid(decl.prop);
                 } else if (message === 'Uncomplete match') {
-                    message = 'The rest part of value can\'t to be matched on `' + decl.prop + '` syntax';
+                    message = messages.uncomplete(decl.prop);
                 }
 
                 stylelint.utils.report({
