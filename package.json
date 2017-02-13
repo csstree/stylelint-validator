@@ -18,11 +18,16 @@
     "validator",
     "syntax"
   ],
+  "scripts": {
+    "test": "tape test"
+  },
   "dependencies": {
     "css-tree": "1.0.0-alpha16",
     "stylelint": "^7.0.0"
   },
   "devDependencies": {
+    "stylelint-rule-tester": "^0.6.2",
+    "tape": "^4.6.3"
   },
   "eslintConfig": {
     "env": {
@@ -32,7 +37,13 @@
     "rules": {
       "no-duplicate-case": 2,
       "no-undef": 2,
-      "no-unused-vars": [2, {"vars": "all", "args": "after-used"}]
+      "no-unused-vars": [
+        2,
+        {
+          "vars": "all",
+          "args": "after-used"
+        }
+      ]
     }
   }
 }
