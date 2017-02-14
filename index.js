@@ -55,6 +55,12 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
                 return;
             }
 
+            // ignore properocessor's var declarations, since postcss treats it as declarations
+            if (decl.prop.charAt(0) === '$' ||
+                decl.prop.charAt(0) === '@') {
+                return;
+            }
+
             try {
                 value = parser.parse(decl.value, {
                     context: 'value',

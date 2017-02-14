@@ -22,6 +22,12 @@ testRule(null, function(tr) {
     tr.ok('.foo { color: 3 % 6 }');
 });
 
+// should ignore preprocessor var declaration
+testRule({ ignore: ['foo', 'bar'] }, function(tr) {
+    tr.ok('$foo: 1');
+    tr.ok('@foo: 2');
+});
+
 // should ignore properties from `ignore` list
 testRule({ ignore: ['foo', 'bar'] }, function(tr) {
     tr.ok('.foo { foo: 1 }');
