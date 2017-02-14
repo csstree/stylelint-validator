@@ -1,3 +1,8 @@
+## 1.1.0 (February 14, 2017)
+
+- Ignore `Less` and `Sass` var declarations that treats as regular declarations by PostCSS (#4)
+- Implemented `ignore` option to define a list of property names that should be ignored by the validator. It may be used as a workaround to avoid warnings about syntax extensions (#5)
+
 ## 1.0.6 (February 12, 2017)
 
 - Bump CSSTree to `1.0.0-alpha16`
