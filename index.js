@@ -35,10 +35,25 @@ parser.readSequenceFallback = function() {
     }
 };
 
-module.exports = stylelint.createPlugin(ruleName, function() {
+module.exports = stylelint.createPlugin(ruleName, function(options) {
+    var ignore = false;
+    options = options || {};
+
+    if (Array.isArray(options.ignore)) {
+        ignore = options.ignore.reduce(function(res, name) {
+            res[name] = true;
+            return res;
+        }, Object.create(null));
+    }
+
     return function(root, result) {
         root.walkDecls(function(decl) {
             var value;
+
+            // ignore properties from ignore list
+            if (ignore && ignore[decl.prop.toLowerCase()]) {
+                return;
+            }
 
             try {
                 value = parser.parse(decl.value, {

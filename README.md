@@ -25,6 +25,30 @@ Setup plugin in your [stylelint config](http://stylelint.io/user-guide/configura
 }
 ```
 
+### Options
+
+#### ignore
+
+Type: `Array` or `false`
+Default: `false`
+
+Defines a list of property names that should be ignored by the validator.
+
+```json
+{
+  "plugins": [
+    "stylelint-csstree-validator"
+  ],
+  "rules": {
+    "csstree/validator": {
+      "ignore": ["composes", "foo", "bar"]
+    }
+  }
+}
+```
+
+In this example, plugin would not test declaration with property name `composes`, `foo` or `bar`. As a result, no warnings for these declarations.
+
 ## License
 
 MIT
