@@ -19,7 +19,8 @@
     "syntax"
   ],
   "scripts": {
-    "test": "tape test"
+    "test": "tape test",
+    "travis": "npm run test"
   },
   "dependencies": {
     "css-tree": "1.0.0-alpha16",
