@@ -12,20 +12,34 @@ testRule(null, function(tr) {
     tr.notOk('.foo { color: &a }', messages.parseError('&a'));
 });
 
-// ignore values with preprocessor extenstions
+// ignore values with less extenstions
 testRule(null, function(tr) {
-    // less
-    tr.ok('.foo { color: @red }');
+    // variables
+    tr.ok('.foo { color: @var }');
+    // tr.ok('.foo { color: @@var }');
+    tr.notOk('.foo { color: @ }', messages.parseError('@'));
+    tr.notOk('.foo { color: @123 }', messages.parseError('@123'));
+    tr.notOk('.foo { color: @@@var }', messages.parseError('@@@var'));
+
+    // escaping
     tr.ok('.foo { color: ~"test" }');
-    // sass/scss
-    tr.ok('.foo { color: $red }');
-    tr.ok('.foo { color: 3 % 6 }');
+    tr.ok('.foo { color: ~\'test\' }');
+    tr.notOk('.foo { color: ~ }', messages.parseError('~'));
+    tr.notOk('.foo { color: ~123 }', messages.parseError('~123'));
+
+    tr.ok('@foo: 2');
 });
 
-// should ignore preprocessor var declaration
-testRule({ ignore: ['foo', 'bar'] }, function(tr) {
+// ignore values with sass extenstions
+testRule(null, function(tr) {
+    tr.ok('.foo { color: $red }');
+    tr.notOk('.foo { color: $ }', messages.parseError('$'));
+    tr.notOk('.foo { color: $123 }', messages.parseError('$123'));
+    tr.notOk('.foo { color: $$123 }', messages.parseError('$$123'));
+
+    tr.ok('.foo { color: 3 % 6 }');
+
     tr.ok('$foo: 1');
-    tr.ok('@foo: 2');
 });
 
 // should ignore properties from `ignore` list

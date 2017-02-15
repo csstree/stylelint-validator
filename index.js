@@ -1,8 +1,7 @@
 var stylelint = require('stylelint');
 var csstree = require('css-tree');
 var syntax = csstree.syntax.defaultSyntax;
-var parser = new csstree.Parser();
-var TYPE = csstree.Tokenizer.TYPE;
+var parser = require('./syntax-extension')(new csstree.Parser());
 
 var ruleName = 'csstree/validator'
 var messages = stylelint.utils.ruleMessages(ruleName, {
@@ -16,24 +15,6 @@ var messages = stylelint.utils.ruleMessages(ruleName, {
         return 'The rest part of value can\'t to be matched on `' + property + '` syntax';
     }
 });
-
-// custom 
-var PreprocessorExtensionError = function() {
-    this.type = 'PreprocessorExtensionError';
-};
-
-// extend parser value parser
-parser.readSequenceFallback = function() {
-    switch (this.scanner.tokenType) {
-        // less
-        case TYPE.CommercialAt: // @var
-        case TYPE.Tilde:        // ~"asd" ~'asd'
-        // sass
-        case TYPE.PercentSign:  // 5 % 4
-        case TYPE.DollarSign:   // $var
-            throw new PreprocessorExtensionError();
-    }
-};
 
 module.exports = stylelint.createPlugin(ruleName, function(options) {
     var ignore = false;
