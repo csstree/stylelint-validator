@@ -26,6 +26,8 @@
     "stylelint": "^7.0.0"
   },
   "devDependencies": {
+    "postcss-less": "^0.15.0",
+    "postcss-scss": "^0.4.1",
     "stylelint-rule-tester": "^0.6.2",
     "tape": "^4.6.3"
   },

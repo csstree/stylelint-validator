@@ -6,11 +6,27 @@ var PreprocessorExtensionError = function() {
 };
 
 module.exports = function extendParser(parser) {
-    // extend parser value parser
+    // new node types
     parser.LessVariableReference = require('./less/LessVariableReference');
     parser.LessVariable = require('./less/LessVariable');
     parser.LessEscaping = require('./less/LessEscaping');
     parser.SassVariable = require('./sass/SassVariable');
+    parser.SassInterpolation = require('./sass/SassInterpolation');
+    
+    // patch HexColor, since we need check before default
+    // TODO: remove after parser extension improvement
+    var originalHexColor = parser.HexColor;
+    parser.HexColor = function() {
+        if (this.scanner.tokenType === TYPE.NumberSign &&
+            this.scanner.lookupType(1) === TYPE.LeftCurlyBracket) {
+            this.SassInterpolation(this.readSequence);
+            throw new PreprocessorExtensionError();
+        }
+
+        return originalHexColor.call(this);
+    };
+
+    // extend parser value parser
     parser.readSequenceFallback = function() {
         var node = null;
 
@@ -29,6 +45,12 @@ module.exports = function extendParser(parser) {
             // sass
             case TYPE.DollarSign:   // $var
                 node = this.SassVariable();
+                break;
+
+            case TYPE.NumberSign:   // #{ }
+                if (this.scanner.lookupType(1) === TYPE.LeftCurlyBracket) {
+                    node = this.SassInterpolation(this.readSequence);
+                }
                 break;
 
             case TYPE.PercentSign:  // 5 % 4

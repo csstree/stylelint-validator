@@ -1,10 +1,16 @@
 var ruleTester = require('stylelint-rule-tester');
 var validator = require('..');
 var messages = validator.messages;
-var testRule = ruleTester(validator.rule, validator.ruleName);
+var css = ruleTester(validator.rule, validator.ruleName);
+var less = ruleTester(validator.rule, validator.ruleName, {
+    postcssOptions: { syntax: require('postcss-less') }
+});
+var sass = ruleTester(validator.rule, validator.ruleName, {
+    postcssOptions: { syntax: require('postcss-scss') }
+});
 
 // base test
-testRule(null, function(tr) {
+css(null, function(tr) {
     tr.ok('.foo { color: red }');
     tr.notOk('.foo { color: red green }', messages.uncomplete('color'));
     tr.notOk('.foo { color: 1 }', messages.invalid('color'));
@@ -13,7 +19,7 @@ testRule(null, function(tr) {
 });
 
 // ignore values with less extenstions
-testRule(null, function(tr) {
+less(null, function(tr) {
     // variables
     tr.ok('.foo { color: @var }');
     // tr.ok('.foo { color: @@var }');
@@ -27,23 +33,39 @@ testRule(null, function(tr) {
     tr.notOk('.foo { color: ~ }', messages.parseError('~'));
     tr.notOk('.foo { color: ~123 }', messages.parseError('~123'));
 
+    // interpolation
+    tr.ok('.foo { @{property}: 1 }');
+    tr.ok('.foo { test-@{property}: 1 }');
+    tr.ok('.foo { @{property}-test: 1 }');
+
+    // standalone var declarations
     tr.ok('@foo: 2');
 });
 
 // ignore values with sass extenstions
-testRule(null, function(tr) {
+sass(null, function(tr) {
+    // variables
     tr.ok('.foo { color: $red }');
     tr.notOk('.foo { color: $ }', messages.parseError('$'));
     tr.notOk('.foo { color: $123 }', messages.parseError('$123'));
     tr.notOk('.foo { color: $$123 }', messages.parseError('$$123'));
 
+    // modulo operator
     tr.ok('.foo { color: 3 % 6 }');
 
+    // interpolation
+    tr.ok('.foo { color: #{$var} }');
+    tr.ok('.foo { color: #{1 + 2} }');
+    tr.ok('.foo { #{$property}: 1 }');
+    tr.ok('.foo { test-#{$property}: 1 }');
+    tr.ok('.foo { #{$property}-test: 1 }');
+
+    // standalone var declarations
     tr.ok('$foo: 1');
 });
 
 // should ignore properties from `ignore` list
-testRule({ ignore: ['foo', 'bar'] }, function(tr) {
+css({ ignore: ['foo', 'bar'] }, function(tr) {
     tr.ok('.foo { foo: 1 }');
     tr.ok('.foo { bar: 1 }');
     tr.ok('.foo { BAR: 1 }');
