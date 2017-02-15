@@ -36,9 +36,9 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
                 return;
             }
 
-            // ignore properocessor's var declarations, since postcss treats it as declarations
-            if (decl.prop.charAt(0) === '$' ||
-                decl.prop.charAt(0) === '@') {
+            // ignore properocessor's var declarations (since postcss treats it as declarations)
+            // and declarations with property names that contain interpolation
+            if (/[#$@]/.test(decl.prop)) {
                 return;
             }
 
