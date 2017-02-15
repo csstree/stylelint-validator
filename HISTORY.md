@@ -1,3 +1,8 @@
+## 1.1.1 (February 15, 2017)
+
+- Ignore any declaration which property name looks using a preprocessor interpolation (e.g. `smth-@{foo}` or `smth-#{$foo}`)
+- Ignore values with `Sass` interpolation (#7)
+
 ## 1.1.0 (February 14, 2017)
 
 - Ignore `Less` and `Sass` var declarations that treats as regular declarations by PostCSS (#4)
