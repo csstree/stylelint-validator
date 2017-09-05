@@ -5,37 +5,29 @@ var PreprocessorExtensionError = function() {
     this.type = 'PreprocessorExtensionError';
 };
 
-module.exports = function extendParser(parser) {
+module.exports = function extendParser(syntaxConfig) {
     // new node types
-    parser.LessVariableReference = require('./less/LessVariableReference');
-    parser.LessVariable = require('./less/LessVariable');
-    parser.LessEscaping = require('./less/LessEscaping');
-    parser.SassVariable = require('./sass/SassVariable');
-    parser.SassInterpolation = require('./sass/SassInterpolation');
-    
-    // patch HexColor, since we need check before default
-    // TODO: remove after parser extension improvement
-    var originalHexColor = parser.HexColor;
-    parser.HexColor = function() {
-        if (this.scanner.tokenType === TYPE.NumberSign &&
-            this.scanner.lookupType(1) === TYPE.LeftCurlyBracket) {
-            this.SassInterpolation(this.readSequence);
-            throw new PreprocessorExtensionError();
-        }
-
-        return originalHexColor.call(this);
-    };
+    syntaxConfig.node.LessVariableReference = require('./less/LessVariableReference');
+    syntaxConfig.node.LessVariable = require('./less/LessVariable');
+    syntaxConfig.node.LessEscaping = require('./less/LessEscaping');
+    syntaxConfig.node.SassVariable = require('./sass/SassVariable');
+    syntaxConfig.node.SassInterpolation = require('./sass/SassInterpolation');
 
     // extend parser value parser
-    parser.readSequenceFallback = function() {
+    var originalGetNode = syntaxConfig.scope.Value.getNode;
+    syntaxConfig.scope.Value.getNode = function(context) {
         var node = null;
 
         switch (this.scanner.tokenType) {
             // less
-            case TYPE.CommercialAt: // @var | @@var
-                node = this.scanner.lookupType(1) === TYPE.CommercialAt
-                    ? this.LessVariableReference()  // @@var
-                    : this.LessVariable();          // @var
+            case TYPE.CommercialAt: // @@var
+                if (this.scanner.lookupType(1) === TYPE.Atrule) {
+                    node = this.LessVariableReference();
+                }
+                break;
+
+            case TYPE.Atrule:       // @var
+                node = this.LessVariable();
                 break;
 
             case TYPE.Tilde:        // ~"asd" | ~'asd'
@@ -49,7 +41,7 @@ module.exports = function extendParser(parser) {
 
             case TYPE.NumberSign:   // #{ }
                 if (this.scanner.lookupType(1) === TYPE.LeftCurlyBracket) {
-                    node = this.SassInterpolation(this.readSequence);
+                    node = this.SassInterpolation(this.scope.Value, this.readSequence);
                 }
                 break;
 
@@ -62,7 +54,9 @@ module.exports = function extendParser(parser) {
         if (node !== null) {
             throw new PreprocessorExtensionError();
         }
+
+        return originalGetNode.call(this, context);
     };
 
-    return parser;
+    return syntaxConfig;
 };

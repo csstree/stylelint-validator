@@ -4,18 +4,24 @@ var NUMBERSIGN = TYPE.NumberSign;
 var LEFTCURLYBRACKET = TYPE.LeftCurlyBracket;
 var RIGHTCURLYBRACKET = TYPE.RightCurlyBracket;
 
-module.exports = function SassInterpolation(readSequence) {
-    var start = this.scanner.tokenStart;
-    var children = new List();
+module.exports = {
+    name: 'SassInterpolation',
+    structure: {
+        children: [[]]
+    },
+    parse: function SassInterpolation(recognizer, readSequence) {
+        var start = this.scanner.tokenStart;
+        var children = new List();
 
-    this.scanner.eat(NUMBERSIGN);
-    this.scanner.eat(LEFTCURLYBRACKET);
-    children = readSequence.call(this);
-    this.scanner.eat(RIGHTCURLYBRACKET);
+        this.scanner.eat(NUMBERSIGN);
+        this.scanner.eat(LEFTCURLYBRACKET);
+        children = readSequence.call(this, recognizer);
+        this.scanner.eat(RIGHTCURLYBRACKET);
 
-    return {
-        type: 'SassInterpolation',
-        loc: this.getLocation(start, this.scanner.tokenStart),
-        children: children
-    };
+        return {
+            type: 'SassInterpolation',
+            loc: this.getLocation(start, this.scanner.tokenStart),
+            children: children
+        };
+    }
 };

@@ -1,7 +1,6 @@
 var stylelint = require('stylelint');
-var csstree = require('css-tree');
-var syntax = csstree.syntax.defaultSyntax;
-var parser = require('./syntax-extension')(new csstree.Parser());
+var csstree = require('css-tree').fork(require('./syntax-extension'));
+var syntax = csstree.lexer;
 
 var ruleName = 'csstree/validator'
 var messages = stylelint.utils.ruleMessages(ruleName, {
@@ -43,7 +42,7 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
             }
 
             try {
-                value = parser.parse(decl.value, {
+                value = csstree.parse(decl.value, {
                     context: 'value',
                     property: decl.prop
                 });
@@ -61,9 +60,16 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
                 });
             }
 
-            if (!syntax.matchProperty(decl.prop, value)) {
-                var error = syntax.lastMatchError;
+            var match = syntax.matchProperty(decl.prop, value);
+            var error = match.error;
+            if (error) {
                 var message = error.rawMessage || error.message || error;
+
+                // ignore errors except those which make sense
+                if (error.name !== 'SyntaxMatchError' &&
+                    error.name !== 'SyntaxReferenceError') {
+                    return;
+                }
 
                 if (message === 'Mismatch') {
                     message = messages.invalid(decl.prop);

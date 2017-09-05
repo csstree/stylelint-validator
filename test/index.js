@@ -17,7 +17,7 @@ css(null, function(tr) {
     tr.notOk('.foo { color: 1 }', messages.invalid('color'));
     tr.notOk('.foo { color: #12345 }', messages.invalid('color'));
     tr.notOk('.foo { color: &a }', messages.parseError('&a'));
-    tr.notOk('.foo { baz: 123 }', 'Unknown property: baz');
+    tr.notOk('.foo { baz: 123 }', 'Unknown property `baz`');
 });
 
 // ignore values with less extenstions
@@ -58,6 +58,7 @@ sass(null, function(tr) {
     // interpolation
     tr.ok('.foo { color: #{$var} }');
     tr.ok('.foo { color: #{1 + 2} }');
+    tr.ok('.foo { max-height: calc(100vh - #{$navbar-height}); }');
     tr.ok('.foo { #{$property}: 1 }');
     tr.ok('.foo { test-#{$property}: 1 }');
     tr.ok('.foo { #{$property}-test: 1 }');
@@ -71,5 +72,5 @@ css({ ignore: ['foo', 'bar'] }, function(tr) {
     tr.ok('.foo { foo: 1 }');
     tr.ok('.foo { bar: 1 }');
     tr.ok('.foo { BAR: 1 }');
-    tr.notOk('.foo { baz: 1 }', 'Unknown property: baz');
+    tr.notOk('.foo { baz: 1 }', 'Unknown property `baz`');
 });
