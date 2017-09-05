@@ -1,3 +1,7 @@
+## 1.2.0 (September 4, 2017)
+
+- Bump CSSTree to `1.0.0-alpha21` (improved parsing and updated property grammars)
+
 ## 1.1.1 (February 15, 2017)
 
 - Ignore any declaration which property name looks using a preprocessor interpolation (e.g. `smth-@{foo}` or `smth-#{$foo}`)
