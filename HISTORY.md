@@ -1,3 +1,7 @@
+## 1.2.1 (November 12, 2017)
+
+- Updated CSSTree to `1.0.0-alpha.26` (improved parsing and bug fixes)
+
 ## 1.2.0 (September 4, 2017)
 
 - Bump CSSTree to `1.0.0-alpha21` (improved parsing and updated property grammars)
