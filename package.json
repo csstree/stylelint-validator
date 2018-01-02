@@ -19,7 +19,7 @@
     "syntax"
   ],
   "scripts": {
-    "test": "tape test",
+    "test": "tape test | tap-spec",
     "travis": "npm run test"
   },
   "dependencies": {
@@ -30,6 +30,7 @@
     "postcss-less": "^0.15.0",
     "postcss-scss": "^0.4.1",
     "stylelint-rule-tester": "^0.6.2",
+    "tap-spec": "^4.1.1",
     "tape": "^4.6.3"
   },
   "eslintConfig": {
