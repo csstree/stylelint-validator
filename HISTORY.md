@@ -1,3 +1,8 @@
+## 1.2.2 (February 19, 2018)
+
+- Updated CSSTree to `1.0.0-alpha.28` (bug fixes)
+- Updated stylelint to `>=7.0.0 <10.0.0` and make it a peer dependency
+
 ## 1.2.1 (November 12, 2017)
 
 - Updated CSSTree to `1.0.0-alpha.26` (improved parsing and bug fixes)
