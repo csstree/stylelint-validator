@@ -77,6 +77,15 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
                     message = messages.uncomplete(decl.prop);
                 }
 
+                var ignoreValue = options.ignoreValue || false;
+
+                if(ignoreValue && new RegExp(ignoreValue).test(decl.value)) {
+                    if(message === messages.invalid(decl.prop) ||
+                       message === messages.uncomplete(decl.prop)) {
+                       return
+                    }
+                }
+
                 stylelint.utils.report({
                     message: message,
                     node: decl,

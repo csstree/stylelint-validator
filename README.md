@@ -52,6 +52,23 @@ Defines a list of property names that should be ignored by the validator.
 
 In this example, plugin would not test declaration with property name `composes`, `foo` or `bar`. As a result, no warnings for these declarations.
 
+#### ignoreValue
+
+Type: `RegExp`
+Default: `false`
+
+Defines a pattern for values that should be ignored by the validator.
+
+```json
+ "rules": {
+    "csstree/validator": {
+      "ignoreValue": "^pattern$"
+    }
+  }
+```
+
+In this example, the plugin will not report warnings for values that match the given pattern. Warnings will sill be reported for properties.
+
 ## License
 
 MIT
