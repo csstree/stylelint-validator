@@ -23,8 +23,8 @@
     "travis": "npm run test"
   },
   "dependencies": {
-    "css-tree": "1.0.0-alpha.26",
-    "stylelint": "^7.0.0"
+    "css-tree": "1.0.0-alpha.28",
+    "stylelint": ">=7.0.0 <10.0.0"
   },
   "devDependencies": {
     "postcss-less": "^0.15.0",
