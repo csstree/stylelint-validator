@@ -52,5 +52,12 @@
         }
       ]
     }
-  }
+  },
+  "files": [
+    "syntax-extension",
+    "index.js",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ]
 }
