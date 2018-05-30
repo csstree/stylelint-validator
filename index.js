@@ -9,9 +9,6 @@ var messages = stylelint.utils.ruleMessages(ruleName, {
     },
     invalid: function(property) {
         return 'Invalid value for `' + property + '`';
-    },
-    uncomplete: function(property) {
-        return 'The rest part of value can\'t to be matched on `' + property + '` syntax';
     }
 });
 
@@ -73,8 +70,6 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
 
                 if (message === 'Mismatch') {
                     message = messages.invalid(decl.prop);
-                } else if (message === 'Uncomplete match') {
-                    message = messages.uncomplete(decl.prop);
                 }
 
                 stylelint.utils.report({

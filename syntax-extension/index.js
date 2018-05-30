@@ -26,7 +26,7 @@ module.exports = function extendParser(syntaxConfig) {
                 }
                 break;
 
-            case TYPE.Atrule:       // @var
+            case TYPE.AtKeyword:    // @var
                 node = this.LessVariable();
                 break;
 
