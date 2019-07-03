@@ -26,7 +26,7 @@
     "css-tree": "1.0.0-alpha.29"
   },
   "peerDependencies": {
-    "stylelint": ">=7.0.0 <10.0.0"
+    "stylelint": ">=7.0.0 <11.0.0"
   },
   "devDependencies": {
     "postcss-less": "^0.15.0",
