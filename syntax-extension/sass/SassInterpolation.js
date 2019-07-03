@@ -1,8 +1,9 @@
 var List = require('css-tree').List;
-var TYPE = require('css-tree').Tokenizer.TYPE;
-var NUMBERSIGN = TYPE.NumberSign;
+var tokenize = require('css-tree').tokenize;
+var TYPE = tokenize.TYPE;
 var LEFTCURLYBRACKET = TYPE.LeftCurlyBracket;
 var RIGHTCURLYBRACKET = TYPE.RightCurlyBracket;
+var NUMBERSIGN = tokenize.CHARCODE.NumberSign;
 
 module.exports = {
     name: 'SassInterpolation',
@@ -13,10 +14,14 @@ module.exports = {
         var start = this.scanner.tokenStart;
         var children = new List();
 
-        this.scanner.eat(NUMBERSIGN);
-        this.scanner.eat(LEFTCURLYBRACKET);
+        if (!this.scanner.isDelim(NUMBERSIGN)) {
+            this.error();
+        }
+
+        this.scanner.next();
+        this.eat(LEFTCURLYBRACKET);
         children = readSequence.call(this, recognizer);
-        this.scanner.eat(RIGHTCURLYBRACKET);
+        this.eat(RIGHTCURLYBRACKET);
 
         return {
             type: 'SassInterpolation',

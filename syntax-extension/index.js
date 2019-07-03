@@ -1,4 +1,6 @@
-var TYPE = require('css-tree').Tokenizer.TYPE;
+var tokenize = require('css-tree').tokenize;
+var TYPE = tokenize.TYPE;
+var CHARCODE = tokenize.CHARCODE;
 
 // custom 
 var PreprocessorExtensionError = function() {
@@ -19,34 +21,38 @@ module.exports = function extendParser(syntaxConfig) {
         var node = null;
 
         switch (this.scanner.tokenType) {
-            // less
-            case TYPE.CommercialAt: // @@var
-                if (this.scanner.lookupType(1) === TYPE.Atrule) {
-                    node = this.LessVariableReference();
-                }
-                break;
-
-            case TYPE.AtKeyword:    // @var
+            case TYPE.AtKeyword:    // less: @var
                 node = this.LessVariable();
                 break;
+            
+            case TYPE.Delim:
+                console.log('??', this.scanner.source.charCodeAt(this.scanner.tokenStart))
+                switch (this.scanner.source.charCodeAt(this.scanner.tokenStart)) {
+                    case CHARCODE.CommercialAt: // less: @@var
+                        if (this.scanner.lookupType(1) === TYPE.Atrule) {
+                            node = this.LessVariableReference();
+                        }
+                        break;
+        
+                    case CHARCODE.Tilde:        // less: ~"asd" | ~'asd'
+                        node = this.LessEscaping();
+                        break;
 
-            case TYPE.Tilde:        // ~"asd" | ~'asd'
-                node = this.LessEscaping();
-                break;
-
-            // sass
-            case TYPE.DollarSign:   // $var
-                node = this.SassVariable();
-                break;
-
-            case TYPE.NumberSign:   // #{ }
-                if (this.scanner.lookupType(1) === TYPE.LeftCurlyBracket) {
-                    node = this.SassInterpolation(this.scope.Value, this.readSequence);
+                    case CHARCODE.DollarSign:   // sass: $var
+                        node = this.SassVariable();
+                        break;
+        
+                    case CHARCODE.NumberSign:   // sass: #{ }
+                        if (this.scanner.lookupType(1) === TYPE.LeftCurlyBracket) {
+                            node = this.SassInterpolation(this.scope.Value, this.readSequence);
+                        }
+                        break;
+        
+                    case CHARCODE.PercentSign:  // sass: 5 % 4
+                        node = this.Operator();
+                        break;
                 }
-                break;
-
-            case TYPE.PercentSign:  // 5 % 4
-                node = this.Operator();
+                console.log('ok');
                 break;
         }
 

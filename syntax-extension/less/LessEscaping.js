@@ -1,6 +1,7 @@
-var TYPE = require('css-tree').Tokenizer.TYPE;
+var tokenize = require('css-tree').tokenize;
+var TYPE = tokenize.TYPE;
 var STRING = TYPE.String;
-var TILDE = TYPE.Tilde;
+var TILDE = tokenize.CHARCODE.Tilde;
 
 module.exports = {
     name: 'LessEscaping',
@@ -10,12 +11,16 @@ module.exports = {
     parse: function LessEscaping() {
         var start = this.scanner.tokenStart;
 
-        this.scanner.eat(TILDE);
+        if (!this.scanner.isDelim(TILDE)) {
+            this.error('Tilde is expected');
+        }
+
+        this.scanner.next();
 
         return {
             type: 'LessEscaping',
             loc: this.getLocation(start, this.scanner.tokenEnd),
-            value: this.scanner.consume(STRING)
+            value: this.consume(STRING)
         };
     }
 };

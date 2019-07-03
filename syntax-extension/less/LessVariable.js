@@ -1,4 +1,4 @@
-var TYPE = require('css-tree').Tokenizer.TYPE;
+var TYPE = require('css-tree').tokenize.TYPE;
 var ATKEYWORD = TYPE.AtKeyword;
 
 module.exports = {
@@ -9,7 +9,7 @@ module.exports = {
     parse: function LessVariable() {
         var start = this.scanner.tokenStart;
 
-        this.scanner.eat(ATKEYWORD);
+        this.eat(ATKEYWORD);
 
         return {
             type: 'LessVariable',

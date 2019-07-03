@@ -1,6 +1,8 @@
-var TYPE = require('css-tree').Tokenizer.TYPE;
-var COMMERCIALAT = TYPE.CommercialAt;
+var tokenize = require('css-tree').tokenize;
+var TYPE = tokenize.TYPE;
+var DELIM = TYPE.Delim;
 var ATRULE = TYPE.Atrule;
+var CHARCODE = tokenize.CHARCODE;
 
 module.exports = {
     name: 'LessVariableReference',
@@ -10,8 +12,12 @@ module.exports = {
     parse: function LessVariableReference() {
         var start = this.scanner.tokenStart;
 
-        this.scanner.eat(COMMERCIALAT);
-        this.scanner.eat(ATRULE);
+        if (!this.scanner.isDelim(CHARCODE.CommercialAt)) {
+            this.error()
+        }
+
+        this.scanner.next();
+        this.eat(ATRULE);
 
         return {
             type: 'LessVariableReference',
