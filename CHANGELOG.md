@@ -1,19 +1,24 @@
+## 1.4.0 (July 3, 2019)
+
+- Added support for stylelint 10 (#17, thanks to @limonte)
+- Bumped CSSTree to [1.0.0-alpha.30](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha.30)
+
 ## 1.3.0 (May 30, 2018)
 
-- Updated CSSTree to [1.0.0-alpha.29](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha.29)
+- Bumped CSSTree to [1.0.0-alpha.29](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha.29)
 
 ## 1.2.2 (February 19, 2018)
 
-- Updated CSSTree to `1.0.0-alpha.28` (bug fixes)
-- Updated stylelint to `>=7.0.0 <10.0.0` and make it a peer dependency
+- Bumped CSSTree to `1.0.0-alpha.28` (bug fixes)
+- Bumped stylelint to `>=7.0.0 <10.0.0` and make it a peer dependency
 
 ## 1.2.1 (November 12, 2017)
 
-- Updated CSSTree to `1.0.0-alpha.26` (improved parsing and bug fixes)
+- Bumped CSSTree to `1.0.0-alpha.26` (improved parsing and bug fixes)
 
 ## 1.2.0 (September 4, 2017)
 
-- Bump CSSTree to `1.0.0-alpha21` (improved parsing and updated property grammars)
+- Bumped CSSTree to `1.0.0-alpha21` (improved parsing and updated property grammars)
 
 ## 1.1.1 (February 15, 2017)
 

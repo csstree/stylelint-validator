@@ -1,6 +1,6 @@
 {
   "name": "stylelint-csstree-validator",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Stylelint plugin to validate CSS syntax",
   "homepage": "https://github.com/csstree/validator",
   "author": "Roman Dvornov <rdvornov@gmail.com>",
@@ -18,9 +18,6 @@
     "validator",
     "syntax"
   ],
-  "engines": {
-    "node": ">=8"
-  },
   "scripts": {
     "test": "tape test | tap-spec",
     "travis": "npm run test"
@@ -58,9 +55,6 @@
   },
   "files": [
     "syntax-extension",
-    "index.js",
-    "CHANGELOG.md",
-    "LICENSE",
-    "README.md"
+    "index.js"
   ]
 }
