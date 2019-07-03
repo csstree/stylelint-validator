@@ -18,6 +18,9 @@
     "validator",
     "syntax"
   ],
+  "engines": {
+    "node": ">=8"
+  },
   "scripts": {
     "test": "tape test | tap-spec",
     "travis": "npm run test"
