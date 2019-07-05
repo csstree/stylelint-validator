@@ -1,3 +1,7 @@
+## 1.4.1 (July 5, 2019)
+
+- Fixed missed `console.log()` (#18)
+
 ## 1.4.0 (July 3, 2019)
 
 - Added support for stylelint 10 (#17, thanks to @limonte)
