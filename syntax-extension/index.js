@@ -26,7 +26,6 @@ module.exports = function extendParser(syntaxConfig) {
                 break;
             
             case TYPE.Delim:
-                console.log('??', this.scanner.source.charCodeAt(this.scanner.tokenStart))
                 switch (this.scanner.source.charCodeAt(this.scanner.tokenStart)) {
                     case CHARCODE.CommercialAt: // less: @@var
                         if (this.scanner.lookupType(1) === TYPE.Atrule) {
@@ -52,7 +51,6 @@ module.exports = function extendParser(syntaxConfig) {
                         node = this.Operator();
                         break;
                 }
-                console.log('ok');
                 break;
         }
 
