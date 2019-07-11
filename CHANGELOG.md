@@ -1,6 +1,10 @@
+## 1.5.2 (July 11, 2019)
+
+- Bumped CSSTree to [1.0.0-alpha.33](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha.33)
+
 ## 1.5.1 (July 11, 2019)
 
-- Bumped CSSTree to [1.0.0-alpha.31](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha.31)
+- Bumped CSSTree to [1.0.0-alpha.32](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha.32)
 
 ## 1.5.0 (July 11, 2019)
 
