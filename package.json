@@ -55,6 +55,7 @@
   },
   "files": [
     "syntax-extension",
-    "index.js"
+    "index.js",
+    "LICENSE"
   ]
 }
