@@ -23,15 +23,15 @@
     "travis": "npm run test"
   },
   "dependencies": {
-    "css-tree": "1.0.0-alpha.33"
+    "css-tree": "1.0.0-alpha.34"
   },
   "peerDependencies": {
-    "stylelint": ">=7.0.0 <11.0.0"
+    "stylelint": "^9.5.0 || ^10.1.0 || ^11.0.0"
   },
   "devDependencies": {
     "postcss-less": "^3.1.4",
     "postcss-scss": "^2.0.0",
-    "stylelint": "^10.1.0",
+    "stylelint": "^11.0.0",
     "stylelint-rule-tester": "^0.6.2",
     "tap-spec": "^5.0.0",
     "tape": "^4.11.0"
