@@ -1,6 +1,6 @@
 ## 1.6.1 (October 6, 2019)
 
-- Fixed regression after css-tree bump to 1.0.0-alpha.34
+- Fixed regression after CSSTree bump to 1.0.0-alpha.34
 
 ## 1.6.0 (October 6, 2019)
 

@@ -2,13 +2,9 @@
   "name": "stylelint-csstree-validator",
   "version": "1.6.1",
   "description": "Stylelint plugin to validate CSS syntax",
-  "homepage": "https://github.com/csstree/validator",
+  "repository": "csstree/stylelint-validator",
   "author": "Roman Dvornov <rdvornov@gmail.com>",
   "license": "MIT",
-  "repository": "csstree/stylelint-validator",
-  "bugs": {
-    "url": "https://github.com/csstree/stylelint-validator/issues"
-  },
   "main": "index.js",
   "keywords": [
     "stylelint-plugin",
@@ -55,7 +51,6 @@
   },
   "files": [
     "syntax-extension",
-    "index.js",
-    "LICENSE"
+    "index.js"
   ]
 }
