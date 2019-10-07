@@ -1,3 +1,8 @@
+## 1.6.0 (October 6, 2019)
+
+- Added support for stylelint 11 (#21, thanks to @ntwb)
+- Bumped CSSTree to [1.0.0-alpha.34](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha.34)
+
 ## 1.5.2 (July 11, 2019)
 
 - Bumped CSSTree to [1.0.0-alpha.33](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha.33)
