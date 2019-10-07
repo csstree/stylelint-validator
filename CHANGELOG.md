@@ -1,3 +1,7 @@
+## 1.6.1 (October 6, 2019)
+
+- Fixed regression after css-tree bump to 1.0.0-alpha.34
+
 ## 1.6.0 (October 6, 2019)
 
 - Added support for stylelint 11 (#21, thanks to @ntwb)
