@@ -1,8 +1,7 @@
 var tokenize = require('css-tree').tokenize;
 var TYPE = tokenize.TYPE;
-var DELIM = TYPE.Delim;
 var ATRULE = TYPE.Atrule;
-var CHARCODE = tokenize.CHARCODE;
+var COMMERCIALAT = 0x0040; // U+0040 COMMERCIAL AT (@)
 
 module.exports = {
     name: 'LessVariableReference',
@@ -12,7 +11,7 @@ module.exports = {
     parse: function LessVariableReference() {
         var start = this.scanner.tokenStart;
 
-        if (!this.scanner.isDelim(CHARCODE.CommercialAt)) {
+        if (!this.scanner.isDelim(COMMERCIALAT)) {
             this.error()
         }
 

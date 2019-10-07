@@ -1,7 +1,7 @@
 var tokenize = require('css-tree').tokenize;
 var TYPE = tokenize.TYPE;
 var STRING = TYPE.String;
-var TILDE = tokenize.CHARCODE.Tilde;
+var TILDE = 0x007E; // U+007E TILDE (~)
 
 module.exports = {
     name: 'LessEscaping',

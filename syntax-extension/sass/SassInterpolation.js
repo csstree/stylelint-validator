@@ -3,7 +3,7 @@ var tokenize = require('css-tree').tokenize;
 var TYPE = tokenize.TYPE;
 var LEFTCURLYBRACKET = TYPE.LeftCurlyBracket;
 var RIGHTCURLYBRACKET = TYPE.RightCurlyBracket;
-var NUMBERSIGN = tokenize.CHARCODE.NumberSign;
+var NUMBERSIGN = 0x0023; // U+0023 NUMBER SIGN (#)
 
 module.exports = {
     name: 'SassInterpolation',

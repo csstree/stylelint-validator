@@ -1,6 +1,10 @@
 var tokenize = require('css-tree').tokenize;
 var TYPE = tokenize.TYPE;
-var CHARCODE = tokenize.CHARCODE;
+var NUMBERSIGN = 0x0023;     // U+0023 NUMBER SIGN (#)
+var DOLLARSIGN = 0x0024;     // U+0024 DOLLAR SIGN ($)
+var PERCENTAGESIGN = 0x0025; // U+0025 PERCENTAGE SIGN (%)
+var COMMERCIALAT = 0x0040;   // U+0040 COMMERCIAL AT (@)
+var TILDE = 0x007E;          // U+007E TILDE (~)
 
 // custom 
 var PreprocessorExtensionError = function() {
@@ -27,27 +31,27 @@ module.exports = function extendParser(syntaxConfig) {
             
             case TYPE.Delim:
                 switch (this.scanner.source.charCodeAt(this.scanner.tokenStart)) {
-                    case CHARCODE.CommercialAt: // less: @@var
+                    case COMMERCIALAT: // less: @@var
                         if (this.scanner.lookupType(1) === TYPE.Atrule) {
                             node = this.LessVariableReference();
                         }
                         break;
         
-                    case CHARCODE.Tilde:        // less: ~"asd" | ~'asd'
+                    case TILDE:        // less: ~"asd" | ~'asd'
                         node = this.LessEscaping();
                         break;
 
-                    case CHARCODE.DollarSign:   // sass: $var
+                    case DOLLARSIGN:   // sass: $var
                         node = this.SassVariable();
                         break;
         
-                    case CHARCODE.NumberSign:   // sass: #{ }
+                    case NUMBERSIGN:   // sass: #{ }
                         if (this.scanner.lookupType(1) === TYPE.LeftCurlyBracket) {
                             node = this.SassInterpolation(this.scope.Value, this.readSequence);
                         }
                         break;
         
-                    case CHARCODE.PercentSign:  // sass: 5 % 4
+                    case PERCENTAGESIGN:  // sass: 5 % 4
                         node = this.Operator();
                         break;
                 }

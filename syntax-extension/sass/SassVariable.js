@@ -1,6 +1,6 @@
 var tokenize = require('css-tree').tokenize;
 var IDENT = tokenize.TYPE.Ident;
-var DOLLARSIGN = tokenize.CHARCODE.DollarSign;
+var DOLLARSIGN = 0x0024; // U+0024 DOLLAR SIGN ($)
 
 module.exports = {
     name: 'SassVariable',
