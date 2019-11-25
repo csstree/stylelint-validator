@@ -1,6 +1,6 @@
 {
   "name": "stylelint-csstree-validator",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "Stylelint plugin to validate CSS syntax",
   "repository": "csstree/stylelint-validator",
   "author": "Roman Dvornov <rdvornov@gmail.com>",

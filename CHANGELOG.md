@@ -1,3 +1,8 @@
+## 1.7.0 (November 25, 2019)
+
+- Added support for stylelint 11 (#24, #23, thanks to @limonte & @gforcada)
+- Bumped CSSTree to `1.0.0-alpha.38` (mdn-data is bumped to `2.0.6`)
+
 ## 1.6.1 (October 6, 2019)
 
 - Fixed regression after CSSTree bump to 1.0.0-alpha.34
