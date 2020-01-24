@@ -1,6 +1,10 @@
+## 1.8.0 (January 24, 2020)
+
+- Added support for stylelint 13 (#25, thanks to @limonte)
+
 ## 1.7.0 (November 25, 2019)
 
-- Added support for stylelint 11 (#24, #23, thanks to @limonte & @gforcada)
+- Added support for stylelint 12 (#24, #23, thanks to @limonte & @gforcada)
 - Bumped CSSTree to `1.0.0-alpha.38` (mdn-data is bumped to `2.0.6`)
 
 ## 1.6.1 (October 6, 2019)
