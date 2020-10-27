@@ -1,13 +1,13 @@
-var tokenize = require('css-tree').tokenize;
-var TYPE = tokenize.TYPE;
-var NUMBERSIGN = 0x0023;     // U+0023 NUMBER SIGN (#)
-var DOLLARSIGN = 0x0024;     // U+0024 DOLLAR SIGN ($)
-var PERCENTAGESIGN = 0x0025; // U+0025 PERCENTAGE SIGN (%)
-var COMMERCIALAT = 0x0040;   // U+0040 COMMERCIAL AT (@)
-var TILDE = 0x007E;          // U+007E TILDE (~)
+const { tokenize } = require('css-tree');
+const TYPE = tokenize.TYPE;
+const NUMBERSIGN = 0x0023;     // U+0023 NUMBER SIGN (#)
+const DOLLARSIGN = 0x0024;     // U+0024 DOLLAR SIGN ($)
+const PERCENTAGESIGN = 0x0025; // U+0025 PERCENTAGE SIGN (%)
+const COMMERCIALAT = 0x0040;   // U+0040 COMMERCIAL AT (@)
+const TILDE = 0x007E;          // U+007E TILDE (~)
 
 // custom 
-var PreprocessorExtensionError = function() {
+const PreprocessorExtensionError = function() {
     this.type = 'PreprocessorExtensionError';
 };
 
@@ -20,9 +20,9 @@ module.exports = function extendParser(syntaxConfig) {
     syntaxConfig.node.SassInterpolation = require('./sass/SassInterpolation');
 
     // extend parser value parser
-    var originalGetNode = syntaxConfig.scope.Value.getNode;
+    const originalGetNode = syntaxConfig.scope.Value.getNode;
     syntaxConfig.scope.Value.getNode = function(context) {
-        var node = null;
+        let node = null;
 
         switch (this.scanner.tokenType) {
             case TYPE.AtKeyword:    // less: @var

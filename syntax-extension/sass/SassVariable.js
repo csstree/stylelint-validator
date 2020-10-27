@@ -1,6 +1,6 @@
-var tokenize = require('css-tree').tokenize;
-var IDENT = tokenize.TYPE.Ident;
-var DOLLARSIGN = 0x0024; // U+0024 DOLLAR SIGN ($)
+const { tokenize: { TYPE } } = require('css-tree');
+const IDENT = TYPE.Ident;
+const DOLLARSIGN = 0x0024; // U+0024 DOLLAR SIGN ($)
 
 module.exports = {
     name: 'SassVariable',
@@ -8,7 +8,7 @@ module.exports = {
         name: 'Identifier'
     },
     parse: function SassVariable() {
-        var start = this.scanner.tokenStart;
+        const start = this.scanner.tokenStart;
 
         if (!this.scanner.isDelim(DOLLARSIGN)) {
             this.error();

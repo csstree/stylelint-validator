@@ -1,7 +1,6 @@
-var tokenize = require('css-tree').tokenize;
-var TYPE = tokenize.TYPE;
-var STRING = TYPE.String;
-var TILDE = 0x007E; // U+007E TILDE (~)
+const { tokenize: { TYPE } } = require('css-tree');
+const STRING = TYPE.String;
+const TILDE = 0x007E; // U+007E TILDE (~)
 
 module.exports = {
     name: 'LessEscaping',
@@ -9,7 +8,7 @@ module.exports = {
         value: 'String'
     },
     parse: function LessEscaping() {
-        var start = this.scanner.tokenStart;
+        const start = this.scanner.tokenStart;
 
         if (!this.scanner.isDelim(TILDE)) {
             this.error('Tilde is expected');

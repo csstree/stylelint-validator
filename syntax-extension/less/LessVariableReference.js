@@ -1,7 +1,6 @@
-var tokenize = require('css-tree').tokenize;
-var TYPE = tokenize.TYPE;
-var ATRULE = TYPE.Atrule;
-var COMMERCIALAT = 0x0040; // U+0040 COMMERCIAL AT (@)
+const { tokenize: { TYPE } } = require('css-tree');
+const ATRULE = TYPE.Atrule;
+const COMMERCIALAT = 0x0040; // U+0040 COMMERCIAL AT (@)
 
 module.exports = {
     name: 'LessVariableReference',
@@ -9,7 +8,7 @@ module.exports = {
         name: 'Identifier'
     },
     parse: function LessVariableReference() {
-        var start = this.scanner.tokenStart;
+        const start = this.scanner.tokenStart;
 
         if (!this.scanner.isDelim(COMMERCIALAT)) {
             this.error()

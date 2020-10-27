@@ -1,5 +1,5 @@
-var TYPE = require('css-tree').tokenize.TYPE;
-var ATKEYWORD = TYPE.AtKeyword;
+const { tokenize: { TYPE } } = require('css-tree');
+const ATKEYWORD = TYPE.AtKeyword;
 
 module.exports = {
     name: 'LessVariable',
@@ -7,7 +7,7 @@ module.exports = {
         name: 'Identifier'
     },
     parse: function LessVariable() {
-        var start = this.scanner.tokenStart;
+        const start = this.scanner.tokenStart;
 
         this.eat(ATKEYWORD);
 

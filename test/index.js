@@ -1,11 +1,11 @@
-var ruleTester = require('stylelint-rule-tester');
-var validator = require('..');
-var messages = validator.messages;
-var css = ruleTester(validator.rule, validator.ruleName);
-var less = ruleTester(validator.rule, validator.ruleName, {
+const ruleTester = require('stylelint-rule-tester');
+const validator = require('..');
+const messages = validator.messages;
+const css = ruleTester(validator.rule, validator.ruleName);
+const less = ruleTester(validator.rule, validator.ruleName, {
     postcssOptions: { syntax: require('postcss-less') }
 });
-var sass = ruleTester(validator.rule, validator.ruleName, {
+const sass = ruleTester(validator.rule, validator.ruleName, {
     postcssOptions: { syntax: require('postcss-scss') }
 });
 
