@@ -18,6 +18,9 @@
     "test": "tape test | tap-spec",
     "travis": "npm run test"
   },
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "dependencies": {
     "css-tree": "^1.0.0"
   },
