@@ -75,6 +75,7 @@ css({ ignore: ['foo', 'bar'] }, function(tr) {
     tr.notOk('.foo { baz: 1 }', 'Unknown property `baz`');
 });
 
+// should ignore by ignoreValue pattern
 css({ ignoreValue: "^patternToIgnore$", ignore: ['bar'] }, function(tr) {
     tr.ok('.foo { color: red }');
     tr.ok('.foo { color: #fff }');
@@ -83,4 +84,32 @@ css({ ignoreValue: "^patternToIgnore$", ignore: ['bar'] }, function(tr) {
     tr.notOk('.foo { color: notMatchingPattern }', messages.invalid('color'));
     tr.notOk('.foo { foo: patternToIgnore }', 'Unknown property `foo`');
     tr.notOk('.foo { foo: notMatchingPattern }', 'Unknown property `foo`');
-})
+});
+
+// extend dictionary
+css({
+    properties: {
+        foo: '<my-fn()>',
+        bar: '| <my-fn()>',
+        qux: '<qux>',
+        relax: '<any-value>'
+    },
+    types: {
+        'my-fn()': 'my-fn(<length-percentage>)',
+        qux: '| <length>',
+        color: '| darken(<color>, <percentage>)'
+    }
+}, function(tr) {
+    tr.ok('.foo { foo: my-fn(10px) }');
+    tr.ok('.foo { foo: my-fn(10%) }');
+    tr.ok('.foo { foo: my-fn(0) }');
+    tr.ok('.bar { bar: my-fn(10px) }');
+    tr.notOk('.baz { baz: my-fn(10px) }', 'Unknown property `baz`');
+    tr.ok('.qux { qux: 10px }');
+    tr.notOk('.foo { color: my-fn(10px) }', messages.invalid('color'));
+    tr.ok('.foo { color: darken(white, 5%) }');
+    tr.ok('.foo { color: white }');
+    tr.notOk('.foo { color: darken(white, .05) }', messages.invalid('color'));
+    tr.ok('.foo { relax: white }');
+    tr.ok('.foo { relax: 10px solid whatever }');
+});

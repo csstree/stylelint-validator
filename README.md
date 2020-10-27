@@ -30,9 +30,79 @@ Setup plugin in your [stylelint config](http://stylelint.io/user-guide/configura
 
 ### Options
 
+#### properties
+
+Type: `Object` or `null`  
+Default: `null`
+
+Overrides or/and extends property definition dictionary. CSS [Value Definition Syntax](https://github.com/csstree/csstree/blob/master/docs/definition-syntax.md) is used to define value's syntax. If definition starts with `|` it added to existing definition if any. See [CSS syntax reference](https://csstree.github.io/docs/syntax/) for default definitions.
+
+In the following example we extend `width` property and defines `size`:
+
+```json
+{
+  "plugins": [
+    "stylelint-csstree-validator"
+  ],
+  "rules": {
+    "csstree/validator": {
+      "properties": {
+        "width": "| new-keyword | custom-function(<length>, <percentage>)",
+        "size": "<length-percentage>"
+      }
+    }
+  }
+}
+```
+
+Using property definitions with the syntax `<any-value>` is an alternative for `ignore` option.
+
+```json
+{
+  "plugins": [
+    "stylelint-csstree-validator"
+  ],
+  "rules": {
+    "csstree/validator": {
+      "properties": {
+        "my-custom-property": "<any-value>"
+      }
+    }
+  }
+}
+```
+
+#### types
+
+Type: `Object` or `null`  
+Default: `null`
+
+Overrides or/and extends type definition dictionary. CSS [Value Definition Syntax](https://github.com/csstree/csstree/blob/master/docs/definition-syntax.md) is used to define value's syntax. If definition starts with `|` it added to existing definition if any. See [CSS syntax reference](https://csstree.github.io/docs/syntax/) for default definitions.
+
+In the following example we define new functional type `my-fn()` and extend `color` type:
+
+```json
+{
+  "plugins": [
+    "stylelint-csstree-validator"
+  ],
+  "rules": {
+    "csstree/validator": {
+      "properties": {
+        "some-property": "<my-fn()>"
+      },
+      "types": {
+        "color": "| darken(<color>, [ <percentage> | <number [0, 1]> ])",
+        "my-fn()": "my-fn( <length-percentage> )"
+      }
+    }
+  }
+}
+```
+
 #### ignore
 
-Type: `Array` or `false`
+Type: `Array` or `false`  
 Default: `false`
 
 Defines a list of property names that should be ignored by the validator.
@@ -54,7 +124,7 @@ In this example, plugin would not test declaration with property name `composes`
 
 #### ignoreValue
 
-Type: `RegExp`
+Type: `RegExp`  
 Default: `false`
 
 Defines a pattern for values that should be ignored by the validator.

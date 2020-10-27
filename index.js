@@ -14,13 +14,33 @@ const messages = stylelint.utils.ruleMessages(ruleName, {
 module.exports = stylelint.createPlugin(ruleName, function(options) {
     options = options || {};
 
-    const syntax = csstree.lexer;
     const ignoreValue = options.ignoreValue && (typeof options.ignoreValue === 'string' || toString.call(options.ignoreValue) === '[object RegExp]')
         ? new RegExp(options.ignoreValue)
         : false;
     const ignore = Array.isArray(options.ignore)
         ? new Set(options.ignore.map(name => String(name).toLowerCase()))
         : false;
+    const syntax = !options.properties && !options.types
+        ? csstree.lexer // default syntax
+        : csstree.fork((syntaxConfig) => { // syntax with custom properties or/and types
+            for (const [name, value] of Object.entries(options.properties || {})) {
+                syntaxConfig.properties[name] = value
+                    .replace(/^\s*\|/, (m, index) => syntaxConfig.properties[name]
+                        ? syntaxConfig.properties[name] + ' |'
+                        : ''
+                    );
+            }
+
+            for (const [name, value] of Object.entries(options.types || {})) {
+                syntaxConfig.types[name] = value
+                    .replace(/^\s*\|/, (m, index) => syntaxConfig.types[name]
+                        ? syntaxConfig.types[name] + ' |'
+                        : ''
+                );
+            }
+
+            return syntaxConfig;
+        }).lexer;
 
     return function(root, result) {
         root.walkDecls(function(decl) {

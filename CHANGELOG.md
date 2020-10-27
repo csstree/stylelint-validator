@@ -1,6 +1,7 @@
 ## next
 
 - Bumped CSSTree to `^1.0.0` (mdn-data is bumped to `2.0.12`)
+- Added `properties` and `types` options to extend syntax dictionary
 - Added `ignoreValue` option (#14)
 
 ## 1.8.0 (January 24, 2020)
