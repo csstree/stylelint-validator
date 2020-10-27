@@ -74,3 +74,13 @@ css({ ignore: ['foo', 'bar'] }, function(tr) {
     tr.ok('.foo { BAR: 1 }');
     tr.notOk('.foo { baz: 1 }', 'Unknown property `baz`');
 });
+
+css({ ignoreValue: "^patternToIgnore$", ignore: ['bar'] }, function(tr) {
+    tr.ok('.foo { color: red }');
+    tr.ok('.foo { color: #fff }');
+    tr.ok('.foo { color: patternToIgnore }');
+    tr.ok('.foo { bar: notMatchingPattern }');
+    tr.notOk('.foo { color: notMatchingPattern }', messages.invalid('color'));
+    tr.notOk('.foo { foo: patternToIgnore }', 'Unknown property `foo`');
+    tr.notOk('.foo { foo: notMatchingPattern }', 'Unknown property `foo`');
+})
