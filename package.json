@@ -19,7 +19,7 @@
     "travis": "npm run test"
   },
   "dependencies": {
-    "css-tree": "1.0.0-alpha.38"
+    "css-tree": "^1.0.0"
   },
   "peerDependencies": {
     "stylelint": ">=7.0.0 <14.0.0"

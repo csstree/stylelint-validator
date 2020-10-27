@@ -1,3 +1,7 @@
+## next
+
+- Bumped CSSTree to `^1.0.0` (mdn-data is bumped to `2.0.12`)
+
 ## 1.8.0 (January 24, 2020)
 
 - Added support for stylelint 13 (#25, thanks to @limonte)
