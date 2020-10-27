@@ -60,14 +60,19 @@ Default: `false`
 Defines a pattern for values that should be ignored by the validator.
 
 ```json
- "rules": {
+{
+  "plugins": [
+    "stylelint-csstree-validator"
+  ],
+  "rules": {
     "csstree/validator": {
       "ignoreValue": "^pattern$"
     }
   }
+}
 ```
 
-In this example, the plugin will not report warnings for values that match the given pattern. Warnings will sill be reported for properties.
+In this example, the plugin will not report warnings for values that match the given pattern. Warnings will still be reported for properties.
 
 ## License
 

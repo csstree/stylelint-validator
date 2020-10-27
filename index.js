@@ -1,9 +1,8 @@
-var stylelint = require('stylelint');
-var csstree = require('css-tree').fork(require('./syntax-extension'));
-var syntax = csstree.lexer;
+const stylelint = require('stylelint');
+const csstree = require('css-tree').fork(require('./syntax-extension'));
 
-var ruleName = 'csstree/validator'
-var messages = stylelint.utils.ruleMessages(ruleName, {
+const ruleName = 'csstree/validator'
+const messages = stylelint.utils.ruleMessages(ruleName, {
     parseError: function(value) {
         return 'Can\'t parse value "' + value + '"';
     },
@@ -13,22 +12,22 @@ var messages = stylelint.utils.ruleMessages(ruleName, {
 });
 
 module.exports = stylelint.createPlugin(ruleName, function(options) {
-    var ignore = false;
     options = options || {};
 
-    if (Array.isArray(options.ignore)) {
-        ignore = options.ignore.reduce(function(res, name) {
-            res[name] = true;
-            return res;
-        }, Object.create(null));
-    }
+    const syntax = csstree.lexer;
+    const ignoreValue = options.ignoreValue && (typeof options.ignoreValue === 'string' || toString.call(options.ignoreValue) === '[object RegExp]')
+        ? new RegExp(options.ignoreValue)
+        : false;
+    const ignore = Array.isArray(options.ignore)
+        ? new Set(options.ignore.map(name => String(name).toLowerCase()))
+        : false;
 
     return function(root, result) {
         root.walkDecls(function(decl) {
-            var value;
+            let value;
 
             // ignore properties from ignore list
-            if (ignore && ignore[decl.prop.toLowerCase()]) {
+            if (ignore && ignore.has(decl.prop.toLowerCase())) {
                 return;
             }
 
@@ -52,15 +51,14 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
                 return stylelint.utils.report({
                     message: messages.parseError(decl.value),
                     node: decl,
-                    result: result,
-                    ruleName: ruleName
+                    result,
+                    ruleName
                 });
             }
 
-            var match = syntax.matchProperty(decl.prop, value);
-            var error = match.error;
+            const { error } = syntax.matchProperty(decl.prop, value);
             if (error) {
-                var message = error.rawMessage || error.message || error;
+                let message = error.rawMessage || error.message || error;
 
                 // ignore errors except those which make sense
                 if (error.name !== 'SyntaxMatchError' &&
@@ -70,22 +68,18 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
 
                 if (message === 'Mismatch') {
                     message = messages.invalid(decl.prop);
-                }
 
-                var ignoreValue = options.ignoreValue || false;
-
-                if(ignoreValue && new RegExp(ignoreValue).test(decl.value)) {
-                    if(message === messages.invalid(decl.prop) ||
-                       message === messages.uncomplete(decl.prop)) {
-                       return
+                    // ignore values by a pattern
+                    if (ignoreValue && ignoreValue.test(decl.value)) {
+                        return;
                     }
                 }
 
                 stylelint.utils.report({
-                    message: message,
+                    message,
                     node: decl,
-                    result: result,
-                    ruleName: ruleName
+                    result,
+                    ruleName
                 });
             }
         });
