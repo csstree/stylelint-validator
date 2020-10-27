@@ -1,4 +1,4 @@
-## next
+## 1.9.0 (October 27, 2020)
 
 - Bumped CSSTree to `^1.0.0` (mdn-data is bumped to `2.0.12`)
 - Added `properties` and `types` options to extend syntax dictionary
