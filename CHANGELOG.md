@@ -1,3 +1,7 @@
+## next
+
+- Added a column to mismatch error details
+
 ## 1.9.0 (October 27, 2020)
 
 - Bumped CSSTree to `^1.0.0` (mdn-data is bumped to `2.0.12`)

@@ -79,6 +79,7 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
             const { error } = syntax.matchProperty(decl.prop, value);
             if (error) {
                 let message = error.rawMessage || error.message || error;
+                let index = undefined;
 
                 // ignore errors except those which make sense
                 if (error.name !== 'SyntaxMatchError' &&
@@ -87,19 +88,21 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
                 }
 
                 if (message === 'Mismatch') {
-                    message = messages.invalid(decl.prop);
-
                     // ignore values by a pattern
                     if (ignoreValue && ignoreValue.test(decl.value)) {
                         return;
                     }
+
+                    message = messages.invalid(decl.prop);
+                    index = decl.prop.length + ((decl.raws && decl.raws.between) || '').length + error.mismatchOffset;
                 }
 
                 stylelint.utils.report({
+                    ruleName,
+                    result,
                     message,
                     node: decl,
-                    result,
-                    ruleName
+                    index
                 });
             }
         });
