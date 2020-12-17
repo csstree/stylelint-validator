@@ -1,6 +1,7 @@
 ## next
 
 - Added a column to mismatch error details
+- Enforced to use CSSTree `^1.1.0`, to simplify syntax extension implementation and to use latest dictionaries
 
 ## 1.9.0 (October 27, 2020)
 

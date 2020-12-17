@@ -11,10 +11,12 @@ const messages = stylelint.utils.ruleMessages(ruleName, {
     }
 });
 
+const isRegExp = value => toString.call(value) === '[object RegExp]';
+
 module.exports = stylelint.createPlugin(ruleName, function(options) {
     options = options || {};
 
-    const ignoreValue = options.ignoreValue && (typeof options.ignoreValue === 'string' || toString.call(options.ignoreValue) === '[object RegExp]')
+    const ignoreValue = options.ignoreValue && (typeof options.ignoreValue === 'string' || isRegExp(options.ignoreValue))
         ? new RegExp(options.ignoreValue)
         : false;
     const ignore = Array.isArray(options.ignore)
@@ -22,24 +24,9 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
         : false;
     const syntax = !options.properties && !options.types
         ? csstree.lexer // default syntax
-        : csstree.fork((syntaxConfig) => { // syntax with custom properties or/and types
-            for (const [name, value] of Object.entries(options.properties || {})) {
-                syntaxConfig.properties[name] = value
-                    .replace(/^\s*\|/, (m, index) => syntaxConfig.properties[name]
-                        ? syntaxConfig.properties[name] + ' |'
-                        : ''
-                    );
-            }
-
-            for (const [name, value] of Object.entries(options.types || {})) {
-                syntaxConfig.types[name] = value
-                    .replace(/^\s*\|/, (m, index) => syntaxConfig.types[name]
-                        ? syntaxConfig.types[name] + ' |'
-                        : ''
-                );
-            }
-
-            return syntaxConfig;
+        : csstree.fork({
+            properties: options.properties,
+            types: options.types
         }).lexer;
 
     return function(root, result) {

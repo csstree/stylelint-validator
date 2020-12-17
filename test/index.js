@@ -22,6 +22,9 @@ const invalid = (prop, line, column) => {
 css(null, function(tr) {
     tr.ok('.foo { color: red }');
     tr.ok('.foo { color: #123456 }');
+    tr.ok('.foo { color: inherit }');
+    tr.ok('.foo { color: initial }');
+    tr.ok('.foo { color: unset }');
     tr.notOk('.foo { color: red green }', invalid('color'));
     tr.notOk('.foo { color: 1 }', invalid('color'));
     tr.notOk('.foo { color: #12345 }', invalid('color'));
