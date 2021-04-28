@@ -6,7 +6,7 @@ const messages = stylelint.utils.ruleMessages(ruleName, {
     parseError: function(value) {
         return 'Can\'t parse value "' + value + '"';
     },
-    invalid: function(property) {
+    invalidValue: function(property) {
         return 'Invalid value for `' + property + '`';
     }
 });
@@ -80,7 +80,7 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
                         return;
                     }
 
-                    message = messages.invalid(decl.prop);
+                    message = messages.invalidValue(decl.prop);
                     index = decl.prop.length + ((decl.raws && decl.raws.between) || '').length + error.mismatchOffset;
                 }
 

@@ -15,7 +15,7 @@
     "syntax"
   ],
   "scripts": {
-    "test": "tape test | tap-spec",
+    "test": "mocha --reporter ${REPORTER:-progress}",
     "travis": "npm run test"
   },
   "engines": {
@@ -28,12 +28,10 @@
     "stylelint": ">=7.0.0 <14.0.0"
   },
   "devDependencies": {
+    "mocha": "^8.2.1",
     "postcss-less": "^3.1.4",
     "postcss-scss": "^2.0.0",
-    "stylelint": "^13.8.0",
-    "stylelint-rule-tester": "^0.6.2",
-    "tap-spec": "^5.0.0",
-    "tape": "^4.13.3"
+    "stylelint": "^13.8.0"
   },
   "eslintConfig": {
     "env": {
