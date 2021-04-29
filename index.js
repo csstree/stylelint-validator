@@ -8,10 +8,14 @@ const messages = stylelint.utils.ruleMessages(ruleName, {
     },
     invalidValue: function(property) {
         return 'Invalid value for `' + property + '`';
+    },
+    invalidPrelude: function(atrule) {
+        return 'Invalid prelude for `@' + atrule + '`';
     }
 });
 
 const isRegExp = value => toString.call(value) === '[object RegExp]';
+const getRaw = (node, name) => (node.raws && node.raws[name]) || '';
 
 module.exports = stylelint.createPlugin(ruleName, function(options) {
     options = options || {};
@@ -26,12 +30,58 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
         ? csstree.lexer // default syntax
         : csstree.fork({
             properties: options.properties,
-            types: options.types
+            types: options.types,
+            atrules: options.atrules
         }).lexer;
 
     return function(root, result) {
+        const badAtrules = new WeakSet();
+
+        root.walkAtRules(function(atrule) {
+            let error;
+
+            // less variables
+            if (atrule.variable) {
+                return;
+            }
+
+            if (error = syntax.checkAtruleName(atrule.name)) {
+                badAtrules.add(atrule);
+                stylelint.utils.report({
+                    ruleName,
+                    result,
+                    message: error.message,
+                    node: atrule
+                });
+                return;
+            }
+
+            if (error = syntax.matchAtrulePrelude(atrule.name, atrule.params).error) {
+                let message = error.rawMessage || error.message;
+                let index = 2 + atrule.name.length + getRaw('afterName').length;
+
+                if (message === 'Mismatch') {
+                    message = messages.invalidPrelude(atrule.name);
+                    index += error.mismatchOffset;
+                }
+
+                stylelint.utils.report({
+                    ruleName,
+                    result,
+                    message,
+                    node: atrule,
+                    index
+                });
+            }
+        });
+
         root.walkDecls(function(decl) {
             let value;
+
+            // don't check for descriptors in bad at-rules
+            if (badAtrules.has(decl.parent)) {
+                return;
+            }
 
             // ignore properties from ignore list
             if (ignore && ignore.has(decl.prop.toLowerCase())) {
@@ -63,7 +113,10 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
                 });
             }
 
-            const { error } = syntax.matchProperty(decl.prop, value);
+            const { error } = decl.parent.type === 'atrule'
+                ? syntax.matchAtruleDescriptor(decl.parent.name, decl.prop, value)
+                : syntax.matchProperty(decl.prop, value);
+
             if (error) {
                 let message = error.rawMessage || error.message || error;
                 let index = undefined;
@@ -81,7 +134,7 @@ module.exports = stylelint.createPlugin(ruleName, function(options) {
                     }
 
                     message = messages.invalidValue(decl.prop);
-                    index = decl.prop.length + ((decl.raws && decl.raws.between) || '').length + error.mismatchOffset;
+                    index = decl.prop.length + getRaw(decl, 'between').length + error.mismatchOffset;
                 }
 
                 stylelint.utils.report({

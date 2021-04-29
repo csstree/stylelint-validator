@@ -18,8 +18,6 @@ const postcss = require('postcss');
  * @param {boolean} [testerOptions.escapeCss = true] - If `false`, the CSS string printed
  *   to the console will not be escaped.
  *   This is useful if you want to read newlines and indentation.
- * @param {boolean} [testerOptions.printWarnings = false] - If `true`, the tester
- *   will print all the warnings that each test case produces.
  * @param {object} [testerOptions.postcssOptions] - An objects object passed
  *   to postcssProcessor.process().
  *   cf. https://github.com/postcss/postcss/blob/master/docs/api.md#processorprocesscss-opts
@@ -42,75 +40,62 @@ function ruleTester(rule, ruleName, testerOptions) {
             ruleOptionsString += ', ' + JSON.stringify(ruleSecondaryOptions);
         }
 
+        const ok = Object.assign(createOkAssertFactory(it), {
+            only: createOkAssertFactory(it.only),
+            skip: createOkAssertFactory(it.skip)
+        });
+        const notOk = Object.assign(createFailureAssertFactory(it), {
+            only: createFailureAssertFactory(it.only),
+            skip: createFailureAssertFactory(it.skip)
+        });
+
         describe(ruleName + (ruleOptionsString ? ' (options: ' + ruleOptionsString + ')' : ''), () => {
             cb({ ok, notOk });
         });
 
-        /**
-         * Checks that a CSS string is valid according to the
-         * specified rule/options.
-         *
-         * @param {string} cssString
-         * @param {string} [description]
-         */
-        function ok(cssString, description) {
-            it(testTitleStr(cssString), () => {
-                return postcssProcess(cssString).then(function(result) {
-                    const warnings = result.warnings();
+        // Checks that a CSS string is valid according to the specified rule/options.
+        function createOkAssertFactory(it) {
+            return (cssString, description) =>
+                it(testTitleStr(cssString), () => {
+                    return postcssProcess(cssString).then(function(result) {
+                        const warnings = result.warnings();
 
-                    if (testerOptions.printWarnings) {
-                        for (const { text } of warnings) {
-                            console.warn('warning: ' + text);
-                        }
-                    }
-
-                    assert.strictEqual(warnings.length, 0, description);
-                })
-            });
+                        assert.strictEqual(warnings.length, 0, description);
+                    })
+                });
         }
 
-        /**
-         * Checks that a CSS string is INVALID according to the
-         * specified rule/options -- i.e. that a warning is registered
-         * with the expected warning message.
-         *
-         * @param {string} cssString
-         * @param {string|object} expectedWarning
-         * @param {string} [expectedWarning.message]
-         * @param {string} [expectedWarning.line]
-         * @param {string} [expectedWarning.column]
-         * @param {string} [description]
-         */
-        function notOk(cssString, expectedWarning, description) {
-            const expectedWarningMessage = typeof expectedWarning === 'string'
-                ? expectedWarning
-                : expectedWarning.message;
-
-            it(testTitleStr(cssString), function() {
-                return postcssProcess(cssString).then(function(result) {
-                    const allActualWarnings = result.warnings();
-                    const actualWarning = allActualWarnings[0];
-
-                    if (testerOptions.printWarnings) {
-                        for (const { text } of allActualWarnings) {
-                            console.warn('warning: ' + text);
-                        }
-                    }
-
-                    assert(allActualWarnings.length > 0, 'should warn');
-                    assert.strictEqual(actualWarning.text, expectedWarningMessage);
-
-                    if (typeof expectedWarning === 'object') {
-                        if ('line' in expectedWarning) {
-                            assert.strictEqual(actualWarning.line, expectedWarning.line, 'warning should be at line ' + expectedWarning.line);
+        // Checks that a CSS string is INVALID according to the
+        // specified rule/options -- i.e. that a warning is registered
+        // with the expected warning message.
+        function createFailureAssertFactory(it) {
+            return (cssString, expected) => 
+                it(testTitleStr(cssString), function() {
+                    return postcssProcess(cssString).then(function(result) {
+                        if (!Array.isArray(expected)) {
+                            expected = [expected];
                         }
 
-                        if ('column' in expectedWarning) {
-                            assert.strictEqual(actualWarning.column, expectedWarning.column, 'warning should be at column ' + expectedWarning.column);
-                        }
-                    }
+                        const expectedWarnings = expected.map(entry =>
+                            typeof entry === 'string' ? { message: entry } : entry
+                        );
+                        const actualWarnings = result.warnings().map((entry, idx) => {
+                            const result = { message: entry.text };
+                            const shape = expectedWarnings[idx] || {};
+
+                            for (let key in shape) {
+                                if (key !== 'message') {
+                                    result[key] = entry[key];
+                                }
+                            }
+
+                            return result;
+                        });
+
+                        assert(actualWarnings.length > 0, 'should warn');
+                        assert.deepStrictEqual(actualWarnings, expectedWarnings);
+                    });
                 });
-            });
         }
 
         function postcssProcess(cssString) {
@@ -138,13 +123,3 @@ function ruleTester(rule, ruleName, testerOptions) {
 }
 
 module.exports = ruleTester;
-
-/**
- * The same as `ruleTester`, but sets the `printWarnings` option to `true`.
- */
-module.exports.printWarnings = function(rule, ruleName, testerOptions) {
-    testerOptions = testerOptions || {};
-    testerOptions.printWarnings = true;
-    return ruleTester(rule, ruleName, testerOptions);
-}
-

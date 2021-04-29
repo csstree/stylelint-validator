@@ -11,6 +11,9 @@ const sass = ruleTester(validator.rule, validator.ruleName, {
 const invalidValue = (prop, line, column) => {
     return invalid(messages.invalidValue(prop), line, column);
 }
+const invalidPrelude = (atrule, line, column) => {
+    return invalid(messages.invalidPrelude(atrule), line, column);
+}
 const invalid = (message, line, column) => {
     if (typeof line !== 'number' && typeof column !== 'number') {
         return message;
@@ -101,7 +104,7 @@ css({ ignoreValue: "^patternToIgnore$", ignore: ['bar'] }, function(tr) {
     tr.ok('.foo { color: patternToIgnore }');
     tr.ok('.foo { bar: notMatchingPattern }');
     tr.notOk('.foo { color: notMatchingPattern }', invalidValue('color'));
-    tr.notOk('.foo { foo: patternToIgnore }', 'Unknown property `foo`');
+    tr.notOk('.foo { foo: patternToIgnore }', invalid('Unknown property `foo`', 1, 8));
     tr.notOk('.foo { foo: notMatchingPattern }', 'Unknown property `foo`');
 });
 
@@ -145,4 +148,20 @@ css({
     tr.ok('.foo { composes: classNameA classNameB from "foo.css" }');
     tr.notOk('.foo { composes: from "foo.css" }', invalidValue('composes', 1, 23));
     tr.notOk('.foo { composes: classNameA "foo.css" }', invalidValue('composes', 1, 29));
+});
+
+// atrule validation
+css({}, function(tr) {
+    tr.ok('@import url("foo.css")');
+    tr.ok('@import url("foo.css");');
+    tr.ok('@imPOrt url("foo.css");');
+    tr.notOk('  @not-import url("foo.css");', invalid('Unknown at-rule `@not-import`', 1, 3));
+    // tr.notOk('  @-unknown-import url("foo.css");', invalid('Unknown at-rule `@-unknown-import`', 1, 3));
+    tr.notOk('  @import { color: red }', invalid('At-rule `@import` should contain a prelude', 1, 11));
+    tr.notOk('  @import url("foo.css") .a', invalidPrelude('import', 1, 26));
+    tr.notOk('  @font-face xx {}', invalid('At-rule `@font-face` should not contain a prelude', 1, 14));
+    tr.notOk('  @font-face { font-display: foo }', invalidValue('font-display', 1, 30));
+    tr.notOk('  @font-face { font-displa: block }', invalid('Unknown at-rule descriptor `font-displa`', 1, 16));
+    tr.notOk('  @foo { color: ref }', [invalid('Unknown at-rule `@foo`', 1, 3)]);
+    tr.notOk('  @media zzz zzz { color: ref }', [invalidPrelude('media', 1, 14)]);
 });

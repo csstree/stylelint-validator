@@ -37,7 +37,7 @@ Default: `null`
 
 Overrides or/and extends property definition dictionary. CSS [Value Definition Syntax](https://github.com/csstree/csstree/blob/master/docs/definition-syntax.md) is used to define value's syntax. If definition starts with `|` it added to existing definition if any. See [CSS syntax reference](https://csstree.github.io/docs/syntax/) for default definitions.
 
-In the following example we extend `width` property and defines `size`:
+The following example extends `width` property and defines `size`:
 
 ```json
 {
@@ -79,7 +79,7 @@ Default: `null`
 
 Overrides or/and extends type definition dictionary. CSS [Value Definition Syntax](https://github.com/csstree/csstree/blob/master/docs/definition-syntax.md) is used to define value's syntax. If definition starts with `|` it added to existing definition if any. See [CSS syntax reference](https://csstree.github.io/docs/syntax/) for default definitions.
 
-In the following example we define new functional type `my-fn()` and extend `color` type:
+The following example defines new functional type `my-fn()` and extends `color` type:
 
 ```json
 {
@@ -94,6 +94,35 @@ In the following example we define new functional type `my-fn()` and extend `col
       "types": {
         "color": "| darken(<color>, [ <percentage> | <number [0, 1]> ])",
         "my-fn()": "my-fn( <length-percentage> )"
+      }
+    }
+  }
+}
+```
+
+#### atrules
+
+Type: `Object` or `null`  
+Default: `null`
+
+Overrides or/and extends atrule definition dictionary. Atrule's definition contains of `prelude` and `descriptors`, both are optional.
+
+The following example defines new atrule `@example` with a prelude and two descriptors (a descriptor is the same as a declaration but with no `!important` allowed):
+
+```json
+{
+  "plugins": [
+    "stylelint-csstree-validator"
+  ],
+  "rules": {
+    "csstree/validator": {
+      "atrules": {
+        "example": {
+          "prelude": "<custom-ident>",
+          "descriptors": {
+            "foo": "<number>",
+            "bar": "<color>"
+          }
       }
     }
   }
