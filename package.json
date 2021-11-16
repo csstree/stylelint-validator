@@ -25,7 +25,7 @@
     "css-tree": "^1.1.2"
   },
   "peerDependencies": {
-    "stylelint": ">=7.0.0 <14.0.0"
+    "stylelint": ">=7.0.0"
   },
   "devDependencies": {
     "mocha": "^8.2.1",
