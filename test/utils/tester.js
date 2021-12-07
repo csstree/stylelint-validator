@@ -61,7 +61,7 @@ function ruleTester(rule, ruleName, testerOptions) {
                         const warnings = result.warnings();
 
                         assert.strictEqual(warnings.length, 0, description);
-                    })
+                    });
                 });
         }
 
@@ -69,7 +69,7 @@ function ruleTester(rule, ruleName, testerOptions) {
         // specified rule/options -- i.e. that a warning is registered
         // with the expected warning message.
         function createFailureAssertFactory(it) {
-            return (cssString, expected) => 
+            return (cssString, expected) =>
                 it(testTitleStr(cssString), function() {
                     return postcssProcess(cssString).then(function(result) {
                         if (!Array.isArray(expected)) {

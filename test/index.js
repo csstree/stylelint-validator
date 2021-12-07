@@ -10,17 +10,17 @@ const sass = ruleTester(validator.rule, validator.ruleName, {
 });
 const invalidValue = (prop, line, column) => {
     return invalid(messages.invalidValue(prop), line, column);
-}
+};
 const invalidPrelude = (atrule, line, column) => {
     return invalid(messages.invalidPrelude(atrule), line, column);
-}
+};
 const invalid = (message, line, column) => {
     if (typeof line !== 'number' && typeof column !== 'number') {
         return message;
     }
 
     return { message, line, column };
-}
+};
 
 // base test
 css(null, function(tr) {
@@ -98,7 +98,7 @@ css({ ignore: ['foo', 'bar'] }, function(tr) {
 });
 
 // should ignore by ignoreValue pattern
-css({ ignoreValue: "^patternToIgnore$", ignore: ['bar'] }, function(tr) {
+css({ ignoreValue: '^patternToIgnore$', ignore: ['bar'] }, function(tr) {
     tr.ok('.foo { color: red }');
     tr.ok('.foo { color: #fff }');
     tr.ok('.foo { color: patternToIgnore }');

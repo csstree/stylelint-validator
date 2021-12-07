@@ -16,6 +16,7 @@
   ],
   "scripts": {
     "test": "mocha --reporter ${REPORTER:-progress}",
+    "lint": "eslint lib test",
     "travis": "npm run test"
   },
   "engines": {
@@ -28,27 +29,11 @@
     "stylelint": ">=7.0.0 <15.0.0"
   },
   "devDependencies": {
+    "eslint": "^8.4.1",
     "mocha": "^9.1.3",
     "postcss-less": "^5.0.0",
     "postcss-scss": "^4.0.2",
     "stylelint": "^14.1.0"
-  },
-  "eslintConfig": {
-    "env": {
-      "node": true,
-      "es6": true
-    },
-    "rules": {
-      "no-duplicate-case": 2,
-      "no-undef": 2,
-      "no-unused-vars": [
-        2,
-        {
-          "vars": "all",
-          "args": "after-used"
-        }
-      ]
-    }
   },
   "files": [
     "lib"
