@@ -46,7 +46,7 @@ css(null, function(tr) {
 less(null, function(tr) {
     // variables
     tr.ok('.foo { color: @var }');
-    // tr.ok('.foo { color: @@var }');
+    tr.ok('.foo { color: @@var }');
     tr.notOk('.foo { color: @ }', messages.parseError('@'));
     tr.notOk('.foo { color: @123 }', messages.parseError('@123'));
     tr.notOk('.foo { color: @@@var }', messages.parseError('@@@var'));

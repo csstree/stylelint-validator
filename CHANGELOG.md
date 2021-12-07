@@ -2,6 +2,7 @@
 
 - Added a column to mismatch error details
 - Enforced to use CSSTree `^1.1.0`, to simplify syntax extension implementation and to use latest dictionaries
+- Fixed failure on a declaration with a Less variable reference, i.e. ignore such declarations for now
 
 ## 1.9.0 (October 27, 2020)
 
