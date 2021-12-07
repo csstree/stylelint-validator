@@ -5,7 +5,7 @@
   "repository": "csstree/stylelint-validator",
   "author": "Roman Dvornov <rdvornov@gmail.com>",
   "license": "MIT",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "keywords": [
     "stylelint-plugin",
     "stylelint",
@@ -51,7 +51,6 @@
     }
   },
   "files": [
-    "syntax-extension",
-    "index.js"
+    "lib"
   ]
 }
