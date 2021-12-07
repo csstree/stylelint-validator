@@ -1,5 +1,6 @@
 [![NPM version](https://img.shields.io/npm/v/stylelint-csstree-validator.svg)](https://www.npmjs.com/package/stylelint-csstree-validator)
-[![Build Status](https://travis-ci.org/csstree/stylelint-validator.svg?branch=master)](https://travis-ci.org/csstree/stylelint-validator)
+[![Build Status](https://github.com/csstree/stylelint-validator/actions/workflows/build.yml/badge.svg)](https://github.com/csstree/stylelint-validator/actions/workflows/build.yml)
+[![Coverage Status](https://coveralls.io/repos/github/csstree/stylelint-validator/badge.svg?branch=master)](https://coveralls.io/github/csstree/stylelint-validator?branch=master)
 
 # stylelint-csstree-validator
 
