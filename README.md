@@ -124,6 +124,7 @@ The following example defines new atrule `@example` with a prelude and two descr
             "foo": "<number>",
             "bar": "<color>"
           }
+        }
       }
     }
   }
@@ -172,7 +173,7 @@ Defines a pattern for values that should be ignored by the validator.
 }
 ```
 
-In this example, the plugin will not report warnings for values that match the given pattern. Warnings will still be reported for properties.
+For this example, the plugin will not report warnings for values that is matched the given pattern. Warnings will still be reported for unknown properties.
 
 ## License
 

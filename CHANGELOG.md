@@ -1,7 +1,8 @@
 ## next
 
+- Bumped CSSTree to `2.0` and latest `mdn-data` dictionaries
 - Added a column to mismatch error details
-- Bump CSSTree to `2.0`, to simplify syntax extension implementation and to use latest dictionaries
+- Fixed `ignoreValue` option to apply for parse errors either (#43)
 - Fixed failure on a declaration with a Less variable reference, i.e. ignore such declarations for now
 
 ## 1.9.0 (October 27, 2020)

@@ -98,11 +98,12 @@ css({ ignore: ['foo', 'bar'] }, function(tr) {
 });
 
 // should ignore by ignoreValue pattern
-css({ ignoreValue: '^patternToIgnore$', ignore: ['bar'] }, function(tr) {
+css({ ignoreValue: '^patternToIgnore$|=', ignore: ['bar'] }, function(tr) {
     tr.ok('.foo { color: red }');
     tr.ok('.foo { color: #fff }');
     tr.ok('.foo { color: patternToIgnore }');
     tr.ok('.foo { bar: notMatchingPattern }');
+    tr.ok('.foo { color: alpha(opacity=1) }');
     tr.notOk('.foo { color: notMatchingPattern }', invalidValue('color'));
     tr.notOk('.foo { foo: patternToIgnore }', invalid('Unknown property `foo`', 1, 8));
     tr.notOk('.foo { foo: notMatchingPattern }', 'Unknown property `foo`');
