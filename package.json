@@ -23,7 +23,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "css-tree": "^1.1.2"
+    "css-tree": "^2.0.1"
   },
   "peerDependencies": {
     "stylelint": ">=7.0.0 <15.0.0"
