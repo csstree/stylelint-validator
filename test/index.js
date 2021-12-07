@@ -152,10 +152,18 @@ css({
 });
 
 // atrule validation
-css({}, function(tr) {
+css({
+    ignoreValue: /ignore-this/,
+    ignore: ['ignore-descriptor']
+}, function(tr) {
     tr.ok('@import url("foo.css")');
     tr.ok('@import url("foo.css");');
     tr.ok('@imPOrt url("foo.css");');
+    tr.ok('@font-face { font-display: swap }');
+    tr.ok('@font-face { font-display: ignore-this }');
+    tr.ok('@font-face { ignore-descriptor: foo }');
+    tr.notOk('@font-face { font-display: ignore-that }', invalidValue('font-display', 1, 28));
+    tr.notOk('.foo { font-display: swap }', invalid('Unknown property `font-display`', 1, 8));
     tr.notOk('  @not-import url("foo.css");', invalid('Unknown at-rule `@not-import`', 1, 3));
     // tr.notOk('  @-unknown-import url("foo.css");', invalid('Unknown at-rule `@-unknown-import`', 1, 3));
     tr.notOk('  @import { color: red }', invalid('At-rule `@import` should contain a prelude', 1, 11));
