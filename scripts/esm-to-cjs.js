@@ -6,6 +6,10 @@ const external = [
     'stylelint-csstree-validator',
     'css-tree',
     'stylelint',
+    'stylelint/lib/utils/isStandardSyntaxAtRule.js',
+    'stylelint/lib/utils/isStandardSyntaxDeclaration.js',
+    'stylelint/lib/utils/isStandardSyntaxProperty.js',
+    'stylelint/lib/utils/isStandardSyntaxValue.js',
     'postcss',
     'postcss-scss',
     'postcss-less'

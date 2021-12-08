@@ -50,9 +50,9 @@ less(null, function(tr) {
     // variables
     tr.ok('.foo { color: @var }');
     tr.ok('.foo { color: @@var }');
-    tr.notOk('.foo { color: @ }', messages.parseError('@'));
-    tr.notOk('.foo { color: @123 }', messages.parseError('@123'));
-    tr.notOk('.foo { color: @@@var }', messages.parseError('@@@var'));
+    tr.ok('.foo { color: @ }', messages.parseError('@'));
+    tr.ok('.foo { color: @123 }', messages.parseError('@123'));
+    tr.ok('.foo { color: @@@var }', messages.parseError('@@@var'));
 
     // escaping
     tr.ok('.foo { color: ~"test" }');
@@ -82,9 +82,9 @@ less(null, function(tr) {
 sass(null, function(tr) {
     // variables
     tr.ok('.foo { color: $red }');
-    tr.notOk('.foo { color: $ }', messages.parseError('$'));
-    tr.notOk('.foo { color: $123 }', messages.parseError('$123'));
-    tr.notOk('.foo { color: $$123 }', messages.parseError('$$123'));
+    tr.ok('.foo { color: $ }', messages.parseError('$'));
+    tr.ok('.foo { color: $123 }', messages.parseError('$123'));
+    tr.ok('.foo { color: $$123 }', messages.parseError('$$123'));
 
     // modulo operator
     tr.ok('.foo { color: 3 % 6 }');
