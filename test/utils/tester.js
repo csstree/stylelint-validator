@@ -1,7 +1,7 @@
 // Reworked stylelint-rule-tester
 
-const assert = require('assert');
-const postcss = require('postcss');
+import assert, { deepStrictEqual } from 'assert';
+import postcss from 'postcss';
 
 /**
  * Create a ruleTester for a specified rule.
@@ -63,7 +63,7 @@ function ruleTester(rule, ruleName, testerOptions) {
                             node: '<node>'
                         }));
 
-                        assert.deepStrictEqual(warnings, [], description);
+                        deepStrictEqual(warnings, [], description);
                     });
                 });
         }
@@ -96,7 +96,7 @@ function ruleTester(rule, ruleName, testerOptions) {
                         });
 
                         assert(actualWarnings.length > 0, 'should warn');
-                        assert.deepStrictEqual(actualWarnings, expectedWarnings);
+                        deepStrictEqual(actualWarnings, expectedWarnings);
                     });
                 });
         }
@@ -125,4 +125,4 @@ function ruleTester(rule, ruleName, testerOptions) {
     }
 }
 
-module.exports = ruleTester;
+export default ruleTester;

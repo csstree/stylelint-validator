@@ -1,12 +1,15 @@
 ## next
 
-- Bumped CSSTree to `2.0` and latest `mdn-data` dictionaries
 - Added at-rule validation for name, prelude and descriptors
 - Added `atrules` option to extend or alter at-rule syntax definition dictionary
 - Added support for Less & Sass namespaces, a value with such constructions are ignored now instead of failure (#39)
 - Added a column to mismatch error details
 - Fixed `ignoreValue` option to apply for parse errors either (#43)
 - Fixed failure on a declaration with a Less variable reference, i.e. ignore such declarations for now
+- Package
+    - Changed supported versions of Node.js to `^12.20.0`, `^14.13.0` and `>=15.0.0`
+    - Converted to ES modules. However, CommonJS is supported as well (dual module)
+    - Bumped `css-tree` to [`2.0`](https://github.com/csstree/csstree/releases/tag/v2.0.0) and latest `mdn-data` dictionaries
 
 ## 1.9.0 (October 27, 2020)
 

@@ -1,12 +1,15 @@
-const ruleTester = require('./utils/tester');
-const validator = require('..');
-const messages = validator.messages;
-const css = ruleTester(validator.rule, validator.ruleName);
-const less = ruleTester(validator.rule, validator.ruleName, {
-    postcssOptions: { syntax: require('postcss-less') }
+import validator from 'stylelint-csstree-validator';
+import lessSyntax from 'postcss-less';
+import scssSyntax from 'postcss-scss';
+import ruleTester from './utils/tester.js';
+
+const { rule, ruleName, messages } = validator;
+const css = ruleTester(rule, ruleName);
+const less = ruleTester(rule, ruleName, {
+    postcssOptions: { syntax: lessSyntax }
 });
-const sass = ruleTester(validator.rule, validator.ruleName, {
-    postcssOptions: { syntax: require('postcss-scss') }
+const sass = ruleTester(rule, ruleName, {
+    postcssOptions: { syntax: scssSyntax }
 });
 const invalidValue = (prop, line, column) => {
     return invalid(messages.invalidValue(prop), line, column);
