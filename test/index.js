@@ -107,7 +107,7 @@ sass(null, function(tr) {
 });
 
 // should ignore properties from `ignore` list
-css({ ignore: ['foo', 'bar'] }, function(tr) {
+css({ ignoreProperties: ['foo', 'bar'] }, function(tr) {
     tr.ok('.foo { foo: 1 }');
     tr.ok('.foo { bar: 1 }');
     tr.ok('.foo { BAR: 1 }');
@@ -115,7 +115,7 @@ css({ ignore: ['foo', 'bar'] }, function(tr) {
 });
 
 // should ignore by ignoreValue pattern
-css({ ignoreValue: '^patternToIgnore$|=', ignore: ['bar'] }, function(tr) {
+css({ ignoreValue: '^patternToIgnore$|=', ignoreProperties: ['bar'] }, function(tr) {
     tr.ok('.foo { color: red }');
     tr.ok('.foo { color: #fff }');
     tr.ok('.foo { color: patternToIgnore }');
@@ -171,7 +171,7 @@ css({
 // atrule validation
 css({
     ignoreValue: /ignore-this/,
-    ignore: ['ignore-descriptor']
+    ignoreProperties: ['ignore-descriptor']
 }, function(tr) {
     tr.ok('@import url("foo.css")');
     tr.ok('@import url("foo.css");');

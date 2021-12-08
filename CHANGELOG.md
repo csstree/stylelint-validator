@@ -5,6 +5,7 @@
 - Used `isStandardSyntax*()` helpers from `stylelint` to reduce failures for non-standard syntax (e.g. Less or Sass)
 - Added support for Less & Sass namespaces, a value with such constructions are ignored now instead of failure (#39)
 - Added a column to mismatch error details
+- Renamed `ignore` option into `ignoreProperties` to be more clear what is ignoring; `ignore` option is still work but cause to a deprecation warning
 - Fixed `ignoreValue` option to apply for parse errors either (#43)
 - Fixed failure on a declaration with a Less variable reference, i.e. ignore such declarations for now
 - Package

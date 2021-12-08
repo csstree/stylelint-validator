@@ -133,6 +133,10 @@ The following example defines new atrule `@example` with a prelude and two descr
 
 #### ignore
 
+Works the same as `ignoreProperties` but **deprecated**, use `ignoreProperties` instead.
+
+#### ignoreProperties
+
 Type: `Array` or `false`  
 Default: `false`
 
@@ -145,7 +149,7 @@ Defines a list of property names that should be ignored by the validator.
   ],
   "rules": {
     "csstree/validator": {
-      "ignore": ["composes", "foo", "bar"]
+      "ignoreProperties": ["composes", "foo", "bar"]
     }
   }
 }
