@@ -4,9 +4,9 @@
 
 # stylelint-csstree-validator
 
-CSS syntax validator based on [csstree](https://github.com/csstree/csstree) as plugin for [stylelint](http://stylelint.io/). Currently it's only checking declaration values to match W3C specs and browsers extensions. It would be extended in future to validate other parts of CSS.
+A [stylelint](http://stylelint.io/) plugin based on [csstree](https://github.com/csstree/csstree) to examinate CSS syntax. It examinates at-rules and declaration values to match W3C specs and browsers extensions. It might be extended in future to validate other parts of CSS.
 
-> Validator is designed to check CSS syntax only. However PostCSS (that used by stylelint as backend) may parse other syntaxes like Less or Sass and can be used for these syntaxes too. In this case validator is limited to check declaration that doesn't contain any CSS extension (e.g. variables).
+> ⚠️ Warning ⚠️: The plugin is designed to validate CSS syntax only. However `stylelint` may be configured to use for other syntaxes like Less or Sass. In this case, the plugin avoids examination of expressions containing non-standard syntax.
 
 ## Install
 
@@ -16,7 +16,7 @@ $ npm install --save-dev stylelint-csstree-validator
 
 ## Usage
 
-Setup plugin in your [stylelint config](http://stylelint.io/user-guide/configuration/):
+Setup plugin in [stylelint config](http://stylelint.io/user-guide/configuration/):
 
 ```json
 {
@@ -31,82 +31,18 @@ Setup plugin in your [stylelint config](http://stylelint.io/user-guide/configura
 
 ### Options
 
-#### properties
-
-Type: `Object` or `null`  
-Default: `null`
-
-Overrides or/and extends property definition dictionary. CSS [Value Definition Syntax](https://github.com/csstree/csstree/blob/master/docs/definition-syntax.md) is used to define value's syntax. If definition starts with `|` it added to existing definition if any. See [CSS syntax reference](https://csstree.github.io/docs/syntax/) for default definitions.
-
-The following example extends `width` property and defines `size`:
-
-```json
-{
-  "plugins": [
-    "stylelint-csstree-validator"
-  ],
-  "rules": {
-    "csstree/validator": {
-      "properties": {
-        "width": "| new-keyword | custom-function(<length>, <percentage>)",
-        "size": "<length-percentage>"
-      }
-    }
-  }
-}
-```
-
-Using property definitions with the syntax `<any-value>` is an alternative for `ignore` option.
-
-```json
-{
-  "plugins": [
-    "stylelint-csstree-validator"
-  ],
-  "rules": {
-    "csstree/validator": {
-      "properties": {
-        "my-custom-property": "<any-value>"
-      }
-    }
-  }
-}
-```
-
-#### types
-
-Type: `Object` or `null`  
-Default: `null`
-
-Overrides or/and extends type definition dictionary. CSS [Value Definition Syntax](https://github.com/csstree/csstree/blob/master/docs/definition-syntax.md) is used to define value's syntax. If definition starts with `|` it added to existing definition if any. See [CSS syntax reference](https://csstree.github.io/docs/syntax/) for default definitions.
-
-The following example defines new functional type `my-fn()` and extends `color` type:
-
-```json
-{
-  "plugins": [
-    "stylelint-csstree-validator"
-  ],
-  "rules": {
-    "csstree/validator": {
-      "properties": {
-        "some-property": "<my-fn()>"
-      },
-      "types": {
-        "color": "| darken(<color>, [ <percentage> | <number [0, 1]> ])",
-        "my-fn()": "my-fn( <length-percentage> )"
-      }
-    }
-  }
-}
-```
-
+- [atrules](#atrules)
+- [properties](#properties)
+- [types](#types)
+- [ignore](#ignore)
+- [ignoreProperties](#ignoreproperties)
+- [ignoreValue](#ignorevalue)
 #### atrules
 
 Type: `Object` or `null`  
 Default: `null`
 
-Overrides or/and extends atrule definition dictionary. Atrule's definition contains of `prelude` and `descriptors`, both are optional.
+An option for extending or altering types syntax dictionary. An atrule definition consists of `prelude` and `descriptors`, both are optional. A `prelude` is a single expression that comes after at-rule name. A `descriptors` is a dictionary like [`properties`](#properties) option but for a specific at-rule. [CSS Value Definition Syntax](https://github.com/csstree/csstree/blob/master/docs/definition-syntax.md) is used to define value's syntax. If a definition starts with `|` it is adding to existing definition value if any. See [CSS syntax reference](https://csstree.github.io/docs/syntax/) for default definitions.
 
 The following example defines new atrule `@example` with a prelude and two descriptors (a descriptor is the same as a declaration but with no `!important` allowed):
 
@@ -131,16 +67,86 @@ The following example defines new atrule `@example` with a prelude and two descr
 }
 ```
 
+#### properties
+
+Type: `Object` or `null`  
+Default: `null`
+
+An option for extending or altering properties syntax dictionary. [CSS Value Definition Syntax](https://github.com/csstree/csstree/blob/master/docs/definition-syntax.md) is used to define value's syntax. If a definition starts with `|` it is adding to existing definition value if any. See [CSS syntax reference](https://csstree.github.io/docs/syntax/) for default definitions.
+
+The following example extends `width` and defines `size` properties:
+
+```json
+{
+  "plugins": [
+    "stylelint-csstree-validator"
+  ],
+  "rules": {
+    "csstree/validator": {
+      "properties": {
+        "width": "| new-keyword | custom-function(<length>, <percentage>)",
+        "size": "<length-percentage>"
+      }
+    }
+  }
+}
+```
+
+Using `<any-value>` for a property definition is an alternative for `ignoreProperties` option.
+
+```json
+{
+  "plugins": [
+    "stylelint-csstree-validator"
+  ],
+  "rules": {
+    "csstree/validator": {
+      "properties": {
+        "my-custom-property": "<any-value>"
+      }
+    }
+  }
+}
+```
+
+#### types
+
+Type: `Object` or `null`  
+Default: `null`
+
+An option for extending or altering types syntax dictionary. Types are something like a preset which allow reuse a definition across other definitions. [CSS Value Definition Syntax](https://github.com/csstree/csstree/blob/master/docs/definition-syntax.md) is used to define value's syntax. If a definition starts with `|` it is adding to existing definition value if any. See [CSS syntax reference](https://csstree.github.io/docs/syntax/) for default definitions.
+
+The following example defines a new functional type `my-fn()` and extends `color` type:
+
+```json
+{
+  "plugins": [
+    "stylelint-csstree-validator"
+  ],
+  "rules": {
+    "csstree/validator": {
+      "properties": {
+        "some-property": "<my-fn()>"
+      },
+      "types": {
+        "color": "| darken(<color>, [ <percentage> | <number [0, 1]> ])",
+        "my-fn()": "my-fn( <length-percentage> )"
+      }
+    }
+  }
+}
+```
+
 #### ignore
 
-Works the same as `ignoreProperties` but **deprecated**, use `ignoreProperties` instead.
+Works the same as [`ignoreProperties`](#ignoreproperties) but **deprecated**, use `ignoreProperties` instead.
 
 #### ignoreProperties
 
 Type: `Array` or `false`  
 Default: `false`
 
-Defines a list of property names that should be ignored by the validator.
+Defines a list of property names that should be ignored by the plugin.
 
 ```json
 {
@@ -155,11 +161,11 @@ Defines a list of property names that should be ignored by the validator.
 }
 ```
 
-In this example, plugin would not test declaration with property name `composes`, `foo` or `bar`. As a result, no warnings for these declarations.
+In this example, plugin will not test declarations with a property name `composes`, `foo` or `bar`, i.e. no warnings for these declarations would be raised.
 
 #### ignoreValue
 
-Type: `RegExp`  
+Type: `RegExp` or `false`  
 Default: `false`
 
 Defines a pattern for values that should be ignored by the validator.
@@ -177,7 +183,7 @@ Defines a pattern for values that should be ignored by the validator.
 }
 ```
 
-For this example, the plugin will not report warnings for values that is matched the given pattern. Warnings will still be reported for unknown properties.
+For this example, the plugin will not report warnings for values which is matched the given pattern. However, warnings will still be reported for unknown properties.
 
 ## License
 
