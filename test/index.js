@@ -64,6 +64,15 @@ less(null, function(tr) {
 
     // standalone var declarations
     tr.ok('@foo: 2');
+
+    // namespaces
+    tr.ok('.foo { color: #outer > .inner(); }');   // deprecated
+    tr.ok('.foo { color: #outer> .inner(); }');    // deprecated
+    tr.ok('.foo { color: #outer >.inner(); }');    // deprecated
+    tr.ok('.foo { color: #outer>.inner(); }');     // deprecated
+    tr.ok('.foo { color: #outer .inner(); }');     // deprecated
+    tr.ok('.foo { color: #outer.inner(); }');      // preferred
+    tr.ok('.foo { color: #outer.inner(1 + 2); }'); // preferred
 });
 
 // ignore values with sass extenstions
@@ -87,6 +96,11 @@ sass(null, function(tr) {
 
     // standalone var declarations
     tr.ok('$foo: 1');
+
+    // namespace
+    tr.ok('.foo { color: fonts.$font-family-text; }');
+    tr.ok('.foo { color: fonts.foo(); }');
+    tr.ok('.foo { color: fonts.foo(1 + 2); }');
 });
 
 // should ignore properties from `ignore` list

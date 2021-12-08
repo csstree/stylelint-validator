@@ -58,9 +58,12 @@ function ruleTester(rule, ruleName, testerOptions) {
             return (cssString, description) =>
                 it(testTitleStr(cssString), () => {
                     return postcssProcess(cssString).then(function(result) {
-                        const warnings = result.warnings();
+                        const warnings = result.warnings().map(warn => ({
+                            ...warn,
+                            node: '<node>'
+                        }));
 
-                        assert.strictEqual(warnings.length, 0, description);
+                        assert.deepStrictEqual(warnings, [], description);
                     });
                 });
         }
@@ -109,7 +112,7 @@ function ruleTester(rule, ruleName, testerOptions) {
 
             return processor
                 .use(rule(rulePrimaryOptions, ruleSecondaryOptions))
-                .process(cssString, testerOptions.postcssOptions);
+                .process(cssString, { from: undefined, ...testerOptions.postcssOptions });
         }
 
         function testTitleStr(css) {

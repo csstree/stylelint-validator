@@ -3,6 +3,7 @@
 - Bumped CSSTree to `2.0` and latest `mdn-data` dictionaries
 - Added at-rule validation for name, prelude and descriptors
 - Added `atrules` option to extend or alter at-rule syntax definition dictionary
+- Added support for Less & Sass namespaces, a value with such constructions are ignored now instead of failure (#39)
 - Added a column to mismatch error details
 - Fixed `ignoreValue` option to apply for parse errors either (#43)
 - Fixed failure on a declaration with a Less variable reference, i.e. ignore such declarations for now
