@@ -45,6 +45,16 @@ css(null, function(tr) {
     tr.notOk('.foo {\n  width: 10px;\n  color: red green;\n}', invalidValue('color', 3, 14));
 });
 
+// atrules
+css(null, function(tr) {
+    tr.notOk('  @unknown {}', invalid('Unknown at-rule `@unknown`', 1, 3));
+    tr.notOk('  @media ??? {}', invalidPrelude('media', 1, 10));
+});
+css({ atrules: false }, function(tr) {
+    tr.ok('@unknown;');
+    tr.ok('@media ??? {}');
+});
+
 // ignore values with less extenstions
 less(null, function(tr) {
     // variables

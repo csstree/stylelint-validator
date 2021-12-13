@@ -37,12 +37,15 @@ Setup plugin in [stylelint config](http://stylelint.io/user-guide/configuration/
 - [ignore](#ignore)
 - [ignoreProperties](#ignoreproperties)
 - [ignoreValue](#ignorevalue)
+
 #### atrules
 
-Type: `Object` or `null`  
+Type: `Object`, `false` or `null`  
 Default: `null`
 
-An option for extending or altering types syntax dictionary. An atrule definition consists of `prelude` and `descriptors`, both are optional. A `prelude` is a single expression that comes after at-rule name. A `descriptors` is a dictionary like [`properties`](#properties) option but for a specific at-rule. [CSS Value Definition Syntax](https://github.com/csstree/csstree/blob/master/docs/definition-syntax.md) is used to define value's syntax. If a definition starts with `|` it is adding to existing definition value if any. See [CSS syntax reference](https://csstree.github.io/docs/syntax/) for default definitions.
+Using `false` value for the option disables at-rule validation.
+
+Otherwise the option is using for extending or altering at-rules syntax dictionary. An atrule definition consists of `prelude` and `descriptors`, both are optional. A `prelude` is a single expression that comes after at-rule name. A `descriptors` is a dictionary like [`properties`](#properties) option but for a specific at-rule. [CSS Value Definition Syntax](https://github.com/csstree/csstree/blob/master/docs/definition-syntax.md) is used to define value's syntax. If a definition starts with `|` it is adding to existing definition value if any. See [CSS syntax reference](https://csstree.github.io/docs/syntax/) for default definitions.
 
 The following example defines new atrule `@example` with a prelude and two descriptors (a descriptor is the same as a declaration but with no `!important` allowed):
 
