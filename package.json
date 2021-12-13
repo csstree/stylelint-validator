@@ -53,6 +53,7 @@
     "stylelint": "^14.1.0"
   },
   "files": [
+    "cjs",
     "lib"
   ]
 }
