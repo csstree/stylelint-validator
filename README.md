@@ -6,7 +6,7 @@
 
 A [stylelint](http://stylelint.io/) plugin based on [csstree](https://github.com/csstree/csstree) to examinate CSS syntax. It examinates at-rules and declaration values to match W3C specs and browsers extensions. It might be extended in future to validate other parts of CSS.
 
-> ⚠️ Warning ⚠️: The plugin is designed to validate CSS syntax only. However `stylelint` may be configured to use for other syntaxes like Less or Sass. In this case, the plugin avoids examination of expressions containing non-standard syntax.
+> ⚠️ Warning ⚠️: The plugin is designed to validate CSS syntax only. However `stylelint` may be configured to use for other syntaxes like Less or Sass. In this case, the plugin avoids examination of expressions containing non-standard syntax, but you need specify which preprocessor is used with the [`syntaxExtensions`](#syntaxextensions) option.
 
 ## Install
 
@@ -31,12 +31,41 @@ Setup plugin in [stylelint config](http://stylelint.io/user-guide/configuration/
 
 ### Options
 
+- [syntaxExtensions](#syntaxextensions)
 - [atrules](#atrules)
 - [properties](#properties)
 - [types](#types)
 - [ignore](#ignore)
+- [ignoreAtrules](#ignoreatrules)
 - [ignoreProperties](#ignoreproperties)
 - [ignoreValue](#ignorevalue)
+
+#### syntaxExtensions
+
+Type: `Array<'sass' | 'less'>` or `false`  
+Default: `false`
+
+Since the plugin focuses on CSS syntax validation it warns on a syntax which is introducing by preprocessors like Less or Sass. The `syntaxExtensions` option allows to specify that some preprocessor's syntaxes are used for styles so the plugin may avoid warnings when met such a syntax.
+
+By default the plugin exams styles as pure CSS. To specify that a preprocessor's syntax is used, you must specify an array with the names of these extensions. Currently supported:
+
+- `sass` – declaration values with Sass syntax will be ignored as well as custom at-rules introduced by Saas (e.g. `@if`, `@else`, `@mixin` etc)
+- `less` – declaration values with Sass syntax will be ignored as well as `@plugin` at-rule introduced by Less
+
+Using both syntax extensions is also possible:
+
+```json
+{
+  "plugins": [
+    "stylelint-csstree-validator"
+  ],
+  "rules": {
+    "csstree/validator": {
+      "syntaxExtensions": ["sass", "less"]
+    }
+  }
+}
+```
 
 #### atrules
 
