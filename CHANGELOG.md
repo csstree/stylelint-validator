@@ -1,7 +1,8 @@
 ## next
 
 - Added at-rule validation for name, prelude and descriptors
-- Added `atrules` option to extend or alter at-rule syntax definition dictionary
+- Added `atrules` option to extend or alter at-rule syntax definition dictionary or disable at-rule validation when `false` is passed as a value for the option
+- Added `ignoreAtrules` option to specify at-rule names which should not be validated
 - Used `isStandardSyntax*()` helpers from `stylelint` to reduce failures for non-standard syntax (e.g. Less or Sass)
 - Added support for Less & Sass namespaces, a value with such constructions are ignored now instead of failure (#39)
 - Added a column to mismatch error details

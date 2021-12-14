@@ -144,12 +144,12 @@ The following example defines a new functional type `my-fn()` and extends `color
 
 Works the same as [`ignoreProperties`](#ignoreproperties) but **deprecated**, use `ignoreProperties` instead.
 
-#### ignoreProperties
+#### ignoreAtrules
 
-Type: `Array` or `false`  
+Type: `Array<string>` or `false`  
 Default: `false`
 
-Defines a list of property names that should be ignored by the plugin.
+Defines a list of at-rules names that should be ignored by the plugin. Ignorance for an at-rule means no validation for its name, prelude or descriptors. The names provided are used for full case-insensitive matching, i.e. a vendor prefix is mandatory and prefixed names should be provided as well if you need to ignore them.
 
 ```json
 {
@@ -158,13 +158,33 @@ Defines a list of property names that should be ignored by the plugin.
   ],
   "rules": {
     "csstree/validator": {
-      "ignoreProperties": ["composes", "foo", "bar"]
+      "ignoreAtrules": ["custom-at-rule", "-webkit-keyframes"]
     }
   }
 }
 ```
 
-In this example, plugin will not test declarations with a property name `composes`, `foo` or `bar`, i.e. no warnings for these declarations would be raised.
+#### ignoreProperties
+
+Type: `Array<string>` or `false`  
+Default: `false`
+
+Defines a list of property names that should be ignored by the plugin. The names provided are used for full case-insensitive matching, i.e. a vendor prefix is mandatory and prefixed names should be provided as well if you need to ignore them.
+
+```json
+{
+  "plugins": [
+    "stylelint-csstree-validator"
+  ],
+  "rules": {
+    "csstree/validator": {
+      "ignoreProperties": ["composes", "mask", "-webkit-mask"]
+    }
+  }
+}
+```
+
+In this example, plugin will not test declarations with a property name `composes`, `mask` or `-webkit-mask`, i.e. no warnings for these declarations would be raised.
 
 #### ignoreValue
 

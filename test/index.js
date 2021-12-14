@@ -50,6 +50,11 @@ css(null, function(tr) {
     tr.notOk('  @unknown {}', invalid('Unknown at-rule `@unknown`', 1, 3));
     tr.notOk('  @media ??? {}', invalidPrelude('media', 1, 10));
 });
+css({ ignoreAtrules: ['unknown', 'import'] }, function(tr) {
+    tr.ok('  @unknown {}');
+    tr.ok('  @import {}');
+    tr.notOk('  @media ??? {}', invalidPrelude('media', 1, 10));
+});
 css({ atrules: false }, function(tr) {
     tr.ok('@unknown;');
     tr.ok('@media ??? {}');
