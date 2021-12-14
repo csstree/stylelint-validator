@@ -49,7 +49,7 @@ Since the plugin focuses on CSS syntax validation it warns on a syntax which is 
 
 By default the plugin exams styles as pure CSS. To specify that a preprocessor's syntax is used, you must specify an array with the names of these extensions. Currently supported:
 
-- `sass` – declaration values with Sass syntax will be ignored as well as custom at-rules introduced by Saas (e.g. `@if`, `@else`, `@mixin` etc)
+- `sass` – declaration values with Sass syntax will be ignored as well as custom at-rules introduced by Saas (e.g. `@if`, `@else`, `@mixin` etc). For now Sass at-rules are allowed with any prelude, but it might be replaced for real syntax definitions in future releases
 - `less` – declaration values with Sass syntax will be ignored as well as `@plugin` at-rule introduced by Less
 
 Using both syntax extensions is also possible:

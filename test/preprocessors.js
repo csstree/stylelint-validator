@@ -43,7 +43,7 @@ const lessTests = function(tr) {
     tr.ok('.foo { color: #outer.inner(1 + 2); }'); // preferred
 
     // custom at-rules
-    // tr.ok('@plugin "my-plugin";');
+    tr.ok('@plugin "my-plugin";');
 };
 
 const sassTests = function(tr) {
@@ -71,12 +71,45 @@ const sassTests = function(tr) {
     tr.ok('.foo { color: fonts.$font-family-text; }');
     tr.ok('.foo { color: fonts.foo(); }');
     tr.ok('.foo { color: fonts.foo(1 + 2); }');
+
+    // custom at-rules
+    tr.ok('@at-root xxx');
+    tr.ok('@content xxx');
+    tr.ok('@debug xxx');
+    tr.ok('@each xxx');
+    tr.ok('@else xxx');
+    tr.ok('@error xxx');
+    tr.ok('@extend xxx');
+    tr.ok('@for xxx');
+    tr.ok('@forward xxx');
+    tr.ok('@function xxx');
+    tr.ok('@if xxx');
+    tr.ok('@import "theme.css";');
+    tr.ok('@import "http://fonts.googleapis.com/css?family=Droid+Sans";');
+    tr.ok('@import url(theme);');
+    tr.ok('@import "landscape" screen and (orientation: landscape);');
+    tr.ok('@include xxx');
+    tr.ok('@mixin xxx');
+    tr.ok('@return xxx');
+    tr.ok('@use xxx');
+    tr.ok('@warn xxx');
+    tr.ok('@while xxx');
 };
 
 // less extenstions
-less({ syntaxExtensions: ['less'] }, lessTests);
+less({ syntaxExtensions: ['less'] }, (tr) => {
+    lessTests(tr);
+
+    // custom Sass at-rules
+    tr.notOk('@if $test {}', messages.unknownAtrule('if'));
+});
 less({ syntaxExtensions: ['less', 'sass'] }, lessTests);
 
 // sass extenstions
-sass({ syntaxExtensions: ['sass'] }, sassTests);
+sass({ syntaxExtensions: ['sass'] }, (tr) => {
+    sassTests(tr);
+
+    // custom Sass at-rules
+    tr.notOk('@plugin "foo";', messages.unknownAtrule('plugin'));
+});
 sass({ syntaxExtensions: ['sass', 'less'] }, sassTests);
