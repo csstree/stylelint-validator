@@ -38,7 +38,7 @@
     "npm": ">=7.0.0"
   },
   "dependencies": {
-    "css-tree": "^2.0.1"
+    "css-tree": "^2.2.1"
   },
   "peerDependencies": {
     "stylelint": ">=7.0.0 <15.0.0"
