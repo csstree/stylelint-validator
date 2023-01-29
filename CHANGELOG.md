@@ -1,3 +1,7 @@
+## next
+
+- Bumped `css-tree` to `^2.3.1`
+
 ## 2.0.0 (December 14, 2021)
 
 - Added `syntaxExtensions` option to specify syntax extensions, i.e. `sass` or/and `less`. For now **the plugin validates CSS only by default**
