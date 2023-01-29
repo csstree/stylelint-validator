@@ -77,13 +77,15 @@ const sassTests = function(tr) {
     tr.ok('@content xxx');
     tr.ok('@debug xxx');
     tr.ok('@each xxx');
-    tr.ok('@else xxx');
     tr.ok('@error xxx');
     tr.ok('@extend xxx');
     tr.ok('@for xxx');
     tr.ok('@forward xxx');
     tr.ok('@function xxx');
     tr.ok('@if xxx');
+    tr.ok('@else xxx');
+    tr.ok('@else {}');
+    tr.ok('@else if {}');
     tr.ok('@import "theme.css";');
     tr.ok('@import "http://fonts.googleapis.com/css?family=Droid+Sans";');
     tr.ok('@import url(theme);');
