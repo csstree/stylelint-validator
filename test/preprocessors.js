@@ -42,6 +42,10 @@ const lessTests = function(tr) {
     tr.ok('.foo { color: #outer.inner(); }');      // preferred
     tr.ok('.foo { color: #outer.inner(1 + 2); }'); // preferred
 
+    // at-rule with Less expressions in a prelude
+    tr.ok('@keyframes @name {}');
+    tr.notOk('@keyframes "foo" "bar" {}', messages.invalidPrelude('keyframes'));
+
     // custom at-rules
     tr.ok('@plugin "my-plugin";');
 };
@@ -71,6 +75,12 @@ const sassTests = function(tr) {
     tr.ok('.foo { color: fonts.$font-family-text; }');
     tr.ok('.foo { color: fonts.foo(); }');
     tr.ok('.foo { color: fonts.foo(1 + 2); }');
+
+    // at-rule with Sass expressions in a prelude
+    tr.ok('@media ($from: $breakpoint) {}');
+    tr.notOk('@media (123) {}', messages.invalidPrelude('media'));
+    tr.ok('@keyframes #{$animationName} {}');
+    tr.notOk('@keyframes "foo" "bar" {}', messages.invalidPrelude('keyframes'));
 
     // custom at-rules
     tr.ok('@at-root xxx');
