@@ -1,4 +1,4 @@
-## next
+## 2.1.0 (January 29, 2023)
 
 - Bumped `css-tree` to `^2.3.1`
 - Extended `ignoreAtrules` and `ignoreProperties` options to accept [RegExp patterns](README.md#regexp-patterns) (#19, #45)
