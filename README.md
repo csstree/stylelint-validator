@@ -241,7 +241,7 @@ For this example, the plugin will not report warnings for values which is matche
 
 In some cases a more general match patterns are needed instead of exact name matching. In such cases a RegExp pattern can be used. 
 
-Since CSS names are an indentifiers which can't contain any RegExp special character, distiguish between a regular name and RegExp is a trivial problem. When the plugins meets a string in a ignore pattern list which contains any character other than `a-z` (case-insensitive), `0-9` or `-`, it produce a RegExp using the expression `new RegExp('^(' + pattern + ')$', 'i')`. In other words, the pattern should be fully matched case-insensitive.
+Since CSS names are an indentifiers which can't contain a special characters used for RegExp's, a distinguishing between a CSS name and RegExp is a trivial problem. When the plugin encounters a string in a ignore pattern list containing any character other than `a-z`, `A-Z`, `0-9` or `-`, it produces a RegExp using the construction `new RegExp('^(' + pattern + ')$', 'i')`. In other words, the pattern should be fully matched case-insensitive.
 
 To have a full control over a RegExp pattern, a regular RegExp instance or its stringified version (i.e. `"/pattern/flags?"`) can be used.
 
