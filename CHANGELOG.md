@@ -1,6 +1,9 @@
 ## next
 
 - Bumped `css-tree` to `^2.3.1`
+- Extended `ignoreAtrules` and `ignoreProperties` options to accept [RegExp patterns](README.md#regexp-patterns) (#19, #45)
+- Fixed Sass's `@else` at-rule to allow have no a prelude (#46)
+- Changed at-rule prelude validation to emit no warnings when a prelude contains Sass/Less syntax extensions (#44)
 
 ## 2.0.0 (December 14, 2021)
 

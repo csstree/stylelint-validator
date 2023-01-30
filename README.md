@@ -35,7 +35,7 @@ Setup plugin in [stylelint config](http://stylelint.io/user-guide/configuration/
 - [atrules](#atrules)
 - [properties](#properties)
 - [types](#types)
-- [ignore](#ignore)
+- [ignore](#ignore) (deprecated)
 - [ignoreAtrules](#ignoreatrules)
 - [ignoreProperties](#ignoreproperties)
 - [ignoreValue](#ignorevalue)
@@ -175,10 +175,10 @@ Works the same as [`ignoreProperties`](#ignoreproperties) but **deprecated**, us
 
 #### ignoreAtrules
 
-Type: `Array<string>` or `false`  
+Type: `Array<string|RegExp>` or `false`  
 Default: `false`
 
-Defines a list of at-rules names that should be ignored by the plugin. Ignorance for an at-rule means no validation for its name, prelude or descriptors. The names provided are used for full case-insensitive matching, i.e. a vendor prefix is mandatory and prefixed names should be provided as well if you need to ignore them.
+Defines a list of at-rules names that should be ignored by the plugin. Ignorance for an at-rule means no validation for its name, prelude or descriptors. The names provided are used for full case-insensitive matching, i.e. a vendor prefix is mandatory and prefixed names should be provided as well if you need to ignore them. You can use [RegExp patterns](#regexp-patterns) in the list as well.
 
 ```json
 {
@@ -195,7 +195,7 @@ Defines a list of at-rules names that should be ignored by the plugin. Ignorance
 
 #### ignoreProperties
 
-Type: `Array<string>` or `false`  
+Type: `Array<string|RegExp>` or `false`  
 Default: `false`
 
 Defines a list of property names that should be ignored by the plugin. The names provided are used for full case-insensitive matching, i.e. a vendor prefix is mandatory and prefixed names should be provided as well if you need to ignore them.
@@ -213,7 +213,7 @@ Defines a list of property names that should be ignored by the plugin. The names
 }
 ```
 
-In this example, plugin will not test declarations with a property name `composes`, `mask` or `-webkit-mask`, i.e. no warnings for these declarations would be raised.
+In this example, plugin will not test declarations with a property name `composes`, `mask` or `-webkit-mask`, i.e. no warnings for these declarations would be raised. You can use [RegExp patterns](#regexp-patterns) in the list as well.
 
 #### ignoreValue
 
@@ -236,6 +236,18 @@ Defines a pattern for values that should be ignored by the validator.
 ```
 
 For this example, the plugin will not report warnings for values which is matched the given pattern. However, warnings will still be reported for unknown properties.
+
+## RegExp patterns
+
+In some cases a more general match patterns are needed instead of exact name matching. In such cases a RegExp pattern can be used. 
+
+Since CSS names are an indentifiers which can't contain any RegExp special character, distiguish between a regular name and RegExp is a trivial problem. When the plugins meets a string in a ignore pattern list which contains any character other than `a-z` (case-insensitive), `0-9` or `-`, it produce a RegExp using the expression `new RegExp('^(' + pattern + ')$', 'i')`. In other words, the pattern should be fully matched case-insensitive.
+
+To have a full control over a RegExp pattern, a regular RegExp instance or its stringified version (i.e. `"/pattern/flags?"`) can be used.
+
+- `"foo|bar"` transforms into `/^(foo|bar)$/i`
+- `"/foo|bar/i"` transforms into `/foo|bar/i` (note: it's not the same as previous RegExp, since not requires a full match with a name)
+- `/foo|bar/` used as is (note: with no `i` flag a matching will be case-sensitive which makes no sense in CSS)
 
 ## License
 

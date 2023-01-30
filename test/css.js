@@ -51,8 +51,21 @@ css(null, function(tr) {
     tr.notOk('  @unknown {}', unknownAtrule('unknown', 1, 3));
     tr.notOk('  @media ??? {}', invalidPrelude('media', 1, 10));
 });
-css({ ignoreAtrules: ['unknown', 'import'] }, function(tr) {
+css({ ignoreAtrules: ['unknown', 'IMPORT'] }, function(tr) {
+    tr.ok('  @UNKNOWN {}');
+    tr.ok('  @import {}');
+    tr.notOk('  @unknown-import {}', unknownAtrule('unknown-import', 1, 3));
+    tr.notOk('  @media ??? {}', invalidPrelude('media', 1, 10));
+});
+css({ ignoreAtrules: ['unknown|import'] }, function(tr) {
     tr.ok('  @unknown {}');
+    tr.ok('  @import {}');
+    tr.notOk('  @unknown-import {}', unknownAtrule('unknown-import', 1, 3));
+    tr.notOk('  @media ??? {}', invalidPrelude('media', 1, 10));
+});
+css({ ignoreAtrules: ['unknown', 'very-unknown|import'] }, function(tr) {
+    tr.ok('  @unknown {}');
+    tr.ok('  @very-unknown {}');
     tr.ok('  @import {}');
     tr.notOk('  @media ??? {}', invalidPrelude('media', 1, 10));
 });
@@ -65,7 +78,41 @@ css({ atrules: false }, function(tr) {
 css({ ignoreProperties: ['foo', 'bar'] }, function(tr) {
     tr.ok('.foo { foo: 1 }');
     tr.ok('.foo { bar: 1 }');
+    tr.notOk('.foo { foobar: 1 }', unknownProperty('foobar'));
     tr.ok('.foo { BAR: 1 }');
+    tr.notOk('.foo { baz: 1 }', unknownProperty('baz'));
+});
+css({ ignoreProperties: ['foo|bar'] }, function(tr) {
+    tr.ok('.foo { foo: 1 }');
+    tr.ok('.foo { bar: 1 }');
+    tr.notOk('.foo { foobar: 1 }', unknownProperty('foobar'));
+    tr.ok('.foo { BAR: 1 }');
+    tr.notOk('.foo { baz: 1 }', unknownProperty('baz'));
+});
+css({ ignoreProperties: ['/foo|bar/', '/qux/i'] }, function(tr) {
+    tr.ok('.foo { foo: 1 }');
+    tr.ok('.foo { bar: 1 }');
+    tr.ok('.foo { foobar: 1 }');
+    tr.notOk('.foo { BAR: 1 }', unknownProperty('BAR'));
+    tr.ok('.foo { QUX: 1; qux: 2 }');
+});
+css({ ignoreProperties: [/foo|bar/, /qux/i] }, function(tr) {
+    tr.ok('.foo { foo: 1 }');
+    tr.ok('.foo { bar: 1 }');
+    tr.ok('.foo { foobar: 1 }');
+    tr.notOk('.foo { BAR: 1 }', unknownProperty('BAR'));
+    tr.ok('.foo { QUX: 1; qux: 2 }');
+});
+css({ ignoreProperties: ['FOO', 'bar|QUX'] }, function(tr) {
+    tr.ok('.foo { foo: 1 }');
+    tr.ok('.foo { BAR: 1 }');
+    tr.ok('.foo { qux: 1 }');
+    tr.notOk('.foo { baz: 1 }', unknownProperty('baz'));
+});
+css({ ignoreProperties: ['token-\\d+'] }, function(tr) {
+    tr.ok('.foo { token-1: 1 }');
+    tr.ok('.foo { token-23: 1 }');
+    tr.notOk('.foo { token-1-postfix: 1 }', unknownProperty('token-1-postfix'));
     tr.notOk('.foo { baz: 1 }', unknownProperty('baz'));
 });
 

@@ -1,6 +1,7 @@
 // Reworked stylelint-rule-tester
 
 import assert, { deepStrictEqual } from 'assert';
+import { isRegExp } from 'util/types';
 import postcss from 'postcss';
 
 /**
@@ -35,9 +36,15 @@ function ruleTester(rule, ruleName, testerOptions) {
             ruleSecondaryOptions = null;
         }
 
-        const ruleOptionsString = rulePrimaryOptions ? JSON.stringify(rulePrimaryOptions) : '';
+        const ruleOptionsString = rulePrimaryOptions
+            ? JSON.stringify(rulePrimaryOptions, (_, value) =>
+                isRegExp(value) ? 'regexp:' + String(value) : value
+            ).replace(/"regexp:(.*?)"/g, '$1')
+            : '';
         if (ruleOptionsString && ruleSecondaryOptions) {
-            ruleOptionsString += ', ' + JSON.stringify(ruleSecondaryOptions);
+            ruleOptionsString += ', ' + JSON.stringify(ruleSecondaryOptions, (_, value) =>
+                isRegExp(value) ? 'regexp:' + String(value) : value
+            ).replace(/"regexp:(.*?)"/g, '$1');
         }
 
         const ok = Object.assign(createOkAssertFactory(it), {
