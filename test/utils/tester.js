@@ -1,8 +1,9 @@
 // Reworked stylelint-rule-tester
 
 import assert, { deepStrictEqual } from 'assert';
-import { isRegExp } from 'util/types';
 import postcss from 'postcss';
+
+const isRegExp = value => toString.call(value) === '[object RegExp]';
 
 /**
  * Create a ruleTester for a specified rule.
