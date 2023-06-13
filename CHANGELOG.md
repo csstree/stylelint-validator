@@ -1,4 +1,4 @@
-## next
+## 3.0.0 (June 12, 2023)
 
 - Added support for stylelint 15 (#53)
 - Dropped support for Node.js below 14.13
