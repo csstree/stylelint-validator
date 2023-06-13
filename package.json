@@ -41,7 +41,7 @@
     "css-tree": "^2.3.1"
   },
   "peerDependencies": {
-    "stylelint": ">=7.0.0 <15.0.0"
+    "stylelint": ">=7.0.0 <16.0.0"
   },
   "devDependencies": {
     "c8": "^7.12.0",
@@ -50,7 +50,7 @@
     "postcss-less": "^6.0.0",
     "postcss-scss": "^4.0.6",
     "rollup": "^2.79.1",
-    "stylelint": "^14.16.1"
+    "stylelint": "^15.7.0"
   },
   "files": [
     "cjs",

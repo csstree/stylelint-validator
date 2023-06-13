@@ -1,3 +1,7 @@
+## next
+
+- Added support for stylelint 15 (#53)
+
 ## 2.1.0 (January 29, 2023)
 
 - Bumped `css-tree` to `^2.3.1`
