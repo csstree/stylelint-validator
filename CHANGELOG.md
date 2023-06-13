@@ -1,6 +1,7 @@
 ## next
 
 - Added support for stylelint 15 (#53)
+- Dropped support for Node.js below 14.13
 
 ## 2.1.0 (January 29, 2023)
 
