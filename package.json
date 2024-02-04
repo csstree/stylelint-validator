@@ -50,7 +50,7 @@
     "postcss-less": "^6.0.0",
     "postcss-scss": "^4.0.6",
     "rollup": "^2.79.1",
-    "stylelint": "^16.2.0"
+    "stylelint": "^16.2.1"
   },
   "files": [
     "cjs",
