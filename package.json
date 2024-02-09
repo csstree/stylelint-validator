@@ -47,6 +47,7 @@
     "c8": "^9.1.0",
     "eslint": "^8.56.0",
     "mocha": "^10.2.0",
+    "postcss": "^8.4.35",
     "postcss-less": "^6.0.0",
     "postcss-scss": "^4.0.9",
     "rollup": "^2.79.1",
