@@ -1,3 +1,7 @@
+## 3.2.1 (March 6, 2025)
+
+- Only lock stylelint version as devDependency
+
 ## 3.2.0 (March 6, 2025)
 
 - Lock stylelint as direct dependency to 16.6.1
