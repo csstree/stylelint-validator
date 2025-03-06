@@ -1,3 +1,12 @@
+## 3.2.0 (March 6, 2025)
+
+- Lock stylelint as direct dependency to 16.6.1
+- Update dependencies
+
+## 3.1.0 (February 9, 2024)
+
+- Added support for stylelint 16 (#53)
+
 ## 3.0.0 (June 12, 2023)
 
 - Added support for stylelint 15 (#53)
