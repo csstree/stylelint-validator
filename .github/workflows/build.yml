@@ -5,7 +5,7 @@ on:
     pull_request:
 
 env:
-    PRIMARY_NODEJS_VERSION: 18
+    PRIMARY_NODEJS_VERSION: 24
     REPORTER: "min"
 
 jobs:
@@ -13,9 +13,9 @@ jobs:
         name: Lint
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
             - name: Setup node ${{ env.PRIMARY_NODEJS_VERSION }}
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v4
               with:
                 node-version: ${{ env.PRIMARY_NODEJS_VERSION }}
                 cache: "npm"
@@ -34,11 +34,14 @@ jobs:
                     - 16
                     - 18
                     - 20
+                    - 22
+                    - 24
+                    - 25.6
 
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
             - name: Setup node ${{ matrix.node_version }}
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v4
               with:
                 node-version: ${{ matrix.node_version }}
                 cache: "npm"
