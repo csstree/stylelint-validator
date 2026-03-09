@@ -1,6 +1,6 @@
 {
   "name": "stylelint-csstree-validator",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Stylelint plugin to validate CSS syntax",
   "repository": "csstree/stylelint-validator",
   "author": "Roman Dvornov <rdvornov@gmail.com>",
@@ -30,27 +30,30 @@
     "build-and-test": "npm run esm-to-cjs-and-test",
     "esm-to-cjs": "node scripts/esm-to-cjs",
     "esm-to-cjs-and-test": "npm run esm-to-cjs && npm run test:cjs",
+    "test:stylelint16": "npm install stylelint@16 --no-save && npm test",
+    "test:stylelint17": "npm install stylelint@17 --no-save && npm test",
+    "test:all-stylelint": "npm run test:stylelint16 && npm run test:stylelint17",
     "coverage": "c8 --reporter=lcovonly npm test",
     "prepublishOnly": "npm run lint && npm test && npm run build-and-test"
   },
   "engines": {
-    "node": "^14.13.0 || >=15.0.0",
+    "node": ">=18.0.0",
     "npm": ">=7.0.0"
   },
   "dependencies": {
-    "css-tree": "^2.3.1"
+    "css-tree": "^3.2.1"
   },
   "peerDependencies": {
-    "stylelint": ">=7.0.0 <16.0.0"
+    "stylelint": ">=16.0.0 <18.0.0"
   },
   "devDependencies": {
-    "c8": "^7.12.0",
-    "eslint": "^8.33.0",
-    "mocha": "^10.2.0",
+    "c8": "^11.0.0",
+    "eslint": "^8.50.0",
+    "mocha": "^11.7.5",
     "postcss-less": "^6.0.0",
-    "postcss-scss": "^4.0.6",
-    "rollup": "^2.79.1",
-    "stylelint": "^15.7.0"
+    "postcss-scss": "^4.0.9",
+    "rollup": "^2.80.0",
+    "stylelint": "^17.0.0"
   },
   "files": [
     "cjs",

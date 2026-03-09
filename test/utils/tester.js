@@ -118,6 +118,23 @@ function ruleTester(rule, ruleName, testerOptions) {
                 });
             }
 
+            // Initialize result.stylelint to satisfy stylelint's validateOptions
+            processor.use({
+                postcssPlugin: 'stylelint-mock',
+                Once(root, { result }) {
+                    result.stylelint = {
+                        ruleSeverities: {},
+                        customMessages: {},
+                        customUrls: {},
+                        ruleMetadata: {},
+                        fixersData: {},
+                        rangesOfComputedEditInfos: [],
+                        disabledRanges: {},
+                        config: { validate: true }
+                    };
+                }
+            });
+
             return processor
                 .use(rule(rulePrimaryOptions, ruleSecondaryOptions))
                 .process(cssString, { from: undefined, ...testerOptions.postcssOptions });

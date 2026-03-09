@@ -78,7 +78,7 @@ const sassTests = function(tr) {
 
     // at-rule with Sass expressions in a prelude
     tr.ok('@media ($from: $breakpoint) {}');
-    tr.notOk('@media (123) {}', messages.invalidPrelude('media'));
+    tr.notOk('@media ? {}', messages.invalidPrelude('media'));
     tr.ok('@keyframes #{$animationName} {}');
     tr.notOk('@keyframes "foo" "bar" {}', messages.invalidPrelude('keyframes'));
 

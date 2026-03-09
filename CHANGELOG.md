@@ -1,3 +1,7 @@
+## 3.1.0 (March 6, 2026)
+
+- Bumped `css-tree` to `^3.2.1`
+
 ## 3.0.0 (June 12, 2023)
 
 - Added support for stylelint 15 (#53)
