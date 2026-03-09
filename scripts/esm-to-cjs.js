@@ -15,15 +15,24 @@ const external = [
     'postcss-less'
 ];
 
-// Plugin to add .default to require() calls for .mjs externals.
-// When require() is used on .mjs files, it returns { __esModule: true, default: fn }
-// instead of the function directly, so we need to unwrap .default.
+// Plugin to handle require() of .mjs externals across Node.js versions.
+// - Stylelint 16 ships both .cjs and .mjs utils; Node 18 can't require() .mjs files.
+// - Stylelint 17 ships only .mjs utils but requires Node >=20.19 where require(.mjs) works.
+// The helper tries .cjs first (stylelint 16 on any Node), falls back to .mjs (stylelint 17).
 const mjsInteropPlugin = {
     name: 'mjs-interop',
     renderChunk(code) {
-        return code.replace(
+        if (!code.includes(".mjs')")) {
+            return null;
+        }
+
+        const helper =
+            "function _requireMjs(m) { try { return require(m.replace(/\\.mjs$/, '.cjs')); }" +
+            " catch { return require(m).default; } }\n";
+
+        return helper + code.replace(
             /require\('([^']+\.mjs)'\)/g,
-            "require('$1').default"
+            "_requireMjs('$1')"
         );
     }
 };
