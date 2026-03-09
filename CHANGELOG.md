@@ -1,3 +1,9 @@
+## 4.0.0 (Match 9, 2026)
+
+- Migrated to support for stylelint 16.x-17.x (#58)
+- Dropped support for stylelint 15.x and below
+- Dropped support for Node.js below 18.0
+
 ## 3.1.0 (March 6, 2026)
 
 - Bumped `css-tree` to `^3.2.1`

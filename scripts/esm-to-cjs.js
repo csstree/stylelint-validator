@@ -28,7 +28,7 @@ const mjsInteropPlugin = {
 
         const helper =
             "function _requireMjs(m) { try { return require(m.replace(/\\.mjs$/, '.cjs')); }" +
-            " catch { return require(m).default; } }\n";
+            ' catch { return require(m).default; } }\n';
 
         return helper + code.replace(
             /require\('([^']+\.mjs)'\)/g,
