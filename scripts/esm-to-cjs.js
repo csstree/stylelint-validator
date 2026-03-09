@@ -6,14 +6,18 @@ const external = [
     'stylelint-csstree-validator',
     'css-tree',
     'stylelint',
-    'stylelint/lib/utils/isStandardSyntaxAtRule.js',
-    'stylelint/lib/utils/isStandardSyntaxDeclaration.js',
-    'stylelint/lib/utils/isStandardSyntaxProperty.js',
-    'stylelint/lib/utils/isStandardSyntaxValue.js',
+    'stylelint/lib/utils/isStandardSyntaxAtRule.mjs',
+    'stylelint/lib/utils/isStandardSyntaxDeclaration.mjs',
+    'stylelint/lib/utils/isStandardSyntaxProperty.mjs',
+    'stylelint/lib/utils/isStandardSyntaxValue.mjs',
     'postcss',
     'postcss-scss',
     'postcss-less'
 ];
+
+function rewriteMjsToCjs(id) {
+    return id.endsWith('.mjs') ? id.replace(/\.mjs$/, '.cjs') : id;
+}
 
 function readDir(dir) {
     return fs.readdirSync(dir)
@@ -39,6 +43,7 @@ async function build(outputDir, ...entryPoints) {
         preserveModules: true,
         interop: false,
         esModule: false,
+        paths: rewriteMjsToCjs,
         generatedCode: {
             constBindings: true
         }

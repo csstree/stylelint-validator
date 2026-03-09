@@ -34,23 +34,23 @@
     "prepublishOnly": "npm run lint && npm test && npm run build-and-test"
   },
   "engines": {
-    "node": "^14.13.0 || >=15.0.0",
+    "node": ">=18.0.0",
     "npm": ">=7.0.0"
   },
   "dependencies": {
     "css-tree": "^3.2.1"
   },
   "peerDependencies": {
-    "stylelint": ">=7.0.0 <16.0.0"
+    "stylelint": ">=16.0.0 <18.0.0"
   },
   "devDependencies": {
     "c8": "^11.0.0",
     "eslint": "^8.50.0",
-    "mocha": "^10.2.0",
+    "mocha": "^11.7.5",
     "postcss-less": "^6.0.0",
-    "postcss-scss": "^4.0.6",
+    "postcss-scss": "^4.0.9",
     "rollup": "^2.80.0",
-    "stylelint": "^15.7.0"
+    "stylelint": "^17.0.0"
   },
   "files": [
     "cjs",
