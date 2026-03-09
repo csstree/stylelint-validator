@@ -15,9 +15,18 @@ const external = [
     'postcss-less'
 ];
 
-function rewriteMjsToCjs(id) {
-    return id.endsWith('.mjs') ? id.replace(/\.mjs$/, '.cjs') : id;
-}
+// Plugin to add .default to require() calls for .mjs externals.
+// When require() is used on .mjs files, it returns { __esModule: true, default: fn }
+// instead of the function directly, so we need to unwrap .default.
+const mjsInteropPlugin = {
+    name: 'mjs-interop',
+    renderChunk(code) {
+        return code.replace(
+            /require\('([^']+\.mjs)'\)/g,
+            "require('$1').default"
+        );
+    }
+};
 
 function readDir(dir) {
     return fs.readdirSync(dir)
@@ -33,7 +42,8 @@ async function build(outputDir, ...entryPoints) {
 
     const res = await rollup({
         external,
-        input: entryPoints
+        input: entryPoints,
+        plugins: [mjsInteropPlugin]
     });
     await res.write({
         dir: outputDir,
@@ -43,7 +53,6 @@ async function build(outputDir, ...entryPoints) {
         preserveModules: true,
         interop: false,
         esModule: false,
-        paths: rewriteMjsToCjs,
         generatedCode: {
             constBindings: true
         }
