@@ -30,6 +30,9 @@
     "build-and-test": "npm run esm-to-cjs-and-test",
     "esm-to-cjs": "node scripts/esm-to-cjs",
     "esm-to-cjs-and-test": "npm run esm-to-cjs && npm run test:cjs",
+    "test:stylelint16": "npm install stylelint@16 --no-save && npm test",
+    "test:stylelint17": "npm install stylelint@17 --no-save && npm test",
+    "test:all-stylelint": "npm run test:stylelint16 && npm run test:stylelint17",
     "coverage": "c8 --reporter=lcovonly npm test",
     "prepublishOnly": "npm run lint && npm test && npm run build-and-test"
   },
