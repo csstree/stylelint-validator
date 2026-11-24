@@ -17,8 +17,8 @@ const external = [
 
 // Plugin to handle require() of .mjs externals across Node.js versions.
 // - Stylelint 16 ships both .cjs and .mjs utils; Node 18 can't require() .mjs files.
-// - Stylelint 17 ships only .mjs utils but requires Node >=20.19 where require(.mjs) works.
-// The helper tries .cjs first (stylelint 16 on any Node), falls back to .mjs (stylelint 17).
+// - Stylelint 17/18 ship only .mjs utils and require Node versions where require(.mjs) works.
+// The helper tries .cjs first (stylelint 16 on any Node), falls back to .mjs (stylelint 17/18).
 const mjsInteropPlugin = {
     name: 'mjs-interop',
     renderChunk(code) {

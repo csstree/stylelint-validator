@@ -37,10 +37,16 @@ jobs:
                 stylelint_version:
                     - 16
                     - 17
+                    - 18
                 exclude:
                     # stylelint 17 requires node >=20.19
                     - node_version: 18
                       stylelint_version: 17
+                    # stylelint 18 requires node ^22.22.2 || ^24.15.0 || >=26.0.0
+                    - node_version: 18
+                      stylelint_version: 18
+                    - node_version: 20
+                      stylelint_version: 18
 
         steps:
             - uses: actions/checkout@v4
